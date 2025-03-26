@@ -38,6 +38,7 @@
 | **`Ctrl + b` then `x`** | Close the current pane |
 | **`Ctrl + b` then `<arrow>`** | Navigate between panes (up, down, left, right) |
 | **`Ctrl + b` then `z`** | Toggle zoom for the current pane (maximize it) |
+| **`Ctrl + b` then `q`, `<number>`** | Show pane numbering, and switch to a specific pane |
 
 ## 🔁 **Pane Resizing**
 

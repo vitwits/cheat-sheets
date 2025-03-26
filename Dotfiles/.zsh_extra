@@ -1,0 +1,6 @@
+# Kubectl
+alias k=kubectl 
+autoload -Uz compinit
+compinit
+source <(kubectl completion zsh)
+complete -o default -F __start_cubectl k
