@@ -1,0 +1,101 @@
+# General
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+*.DS_Store
+Thumbs.db
+
+# Node.js
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.db
+
+# .NET
+bin/
+obj/
+
+# macOS
+*.AppleDouble
+*.LSOverride
+.DS_Store
+.AppleDesktop
+Desktop.ini
+
+# Windows
+Thumbs.db
+ehthumbs.db
+*.cab
+*.bak
+*.swp
+*.swo
+*.log
+*.dat
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.vscode/
+*.iml
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+
+# JetBrains
+.idea/
+
+# VS Code
+.vscode/
+
+# Compiled files
+*.o
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ruby
+*.gem
+*.rvmrc
+.idea/
+
+# Laravel
+/vendor/
+
+# Docker
+.docker/
+
+# TypeScript
+*.tsbuildinfo
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Other
+*.pid
+*.seed
+*.sublime-workspace
+*.sublime-project
