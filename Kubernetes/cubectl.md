@@ -79,3 +79,48 @@
 | **`kubectl top nodes`** | Show resource usage of nodes |
 | **`kubectl get pods --field-selector=status.phase=Pending`** | List only pending pods |
 | **`kubectl get pods --sort-by=.status.startTime`** | Sort pods by start time |
+
+## 💾 **Volumes and Storage**
+| Command | Description |
+|---------|-------------|
+| **`k get persistentvolumes`** | Show detailed information about a persistent volumes `PV` |
+| **`k get persistentvolumeclaims`** | Show information about persistent volume claims `PVC` |
+
+
+
+
+# 📌 Popular Abbreviations in Kubernetes
+
+| Full Name                   |Abbreviation|
+|-----------------------------|------------|
+| `PersistentVolume`          | `pv`       |
+| `PersistentVolumeClaim`     | `pvc`      |
+| `Pod`                       | `po`       |
+| `Deployment`                | `deploy`   |
+| `Service`                   | `svc`      |
+| `Namespace`                 | `ns`       |
+| `ReplicaSet`                | `rs`       |
+| `ConfigMap`                 | `cm`       |
+| `Secret`                    | `secret`   |
+| `Ingress`                   | `ing`      |
+| `Node`                      | `no`       |
+| `DaemonSet`                 | `ds`       |
+| `StatefulSet`               | `sts`      |
+| `Job`                       | `job`      |
+| `CronJob`                   | `cj`       |
+| `Event`                     | `ev`       |
+| `HorizontalPodAutoscaler`   | `hpa`      |
+| `PodDisruptionBudget`       | `pdb`      |
+| `NetworkPolicy`             | `netpol`   |
+| `StorageClass`              | `sc`       |
+| `CertificateSigningRequest` | `csr`      |
+| `ClusterRole`               | `cr`       |
+| `ClusterRoleBinding`        | `crb`      |
+| `Role`                      | `role`     |
+| `RoleBinding`               | `rb`       |
+| `Endpoints`                 | `ep`       |
+| `ResourceQuota`             | `rq`       |
+| `LimitRange`                | `lr`       |
+| `PodSecurityPolicy`         | `psp`      |
+| `VerticalPodAutoscaler`     | `vpa`      |
+|-----------------------------|------------|

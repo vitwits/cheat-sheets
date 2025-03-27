@@ -67,7 +67,7 @@
 |---------|-------------|
 | **`:set number`** | Show line numbers |
 | **`:set paste`** | Paste text with original formatting |
-| **`V`** | Select the current line |
+| **`V` then `j` or `k`** | Select the current line, then select several lines with `j` or `k` |
 | **`<` or `>`** | Shift selected text left or right |
 | **`:s/old/new/g`** | Replace all occurrences of "old" with "new" in the current line |
 | **`:%s/old/new/g`** | Replace all occurrences of "old" with "new" in the entire file |
