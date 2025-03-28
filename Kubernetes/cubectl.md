@@ -69,6 +69,7 @@
 | **`kubectl explain <resource>`** | Show API documentation for a resource |
 | **`kubectl version --short`** | Display Kubernetes client and server version |
 | **`kubectl get all`** | List all resources in the current namespace |
+| **`kubectl get all -n mealie`** | List all resources in the specific namespace |
 
 ## 🔍 **Debugging & Troubleshooting**
 | Command | Description |
@@ -79,6 +80,8 @@
 | **`kubectl top nodes`** | Show resource usage of nodes |
 | **`kubectl get pods --field-selector=status.phase=Pending`** | List only pending pods |
 | **`kubectl get pods --sort-by=.status.startTime`** | Sort pods by start time |
+| **`kubectl logs <pod_name>`** | Get pod logs |
+| **`kubectl logs <pod_name> -c <container_name>`** | Get pod logs of a cpecific container |
 
 ## 💾 **Volumes and Storage**
 | Command | Description |
