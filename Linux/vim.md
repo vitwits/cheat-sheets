@@ -1,5 +1,22 @@
 # 📝 **Vim Cheat Sheet**
 
+## 🗃️ **Opening Files**
+
+| Command | Description |
+|---------|-------------|
+| **`vim -o file1 file2`** | Open files in **horizontally split windows** |
+| **`vim -O file1 file2`** | Open files in **vertically split windows** |
+| **`vim -p file1 file2`** | Open files in **separate tabs** |
+| **`vim -R file1`** | Open file in **read-only mode** |
+| **`vim -m file1`** | Open file **without the ability to save changes** |
+| **`vim -b file1`** | Open file in **binary mode** |
+| **`vim -c "command" file1`** | Open file and execute a **Vim command** (e.g., `vim -c "set number" file1`) |
+| **`vim + file1`** | Open file and move cursor to the **last line** |
+| **`vim +10 file1`** | Open file and move cursor to **line 10** |
+| **`vim +/word file1`** | Open file and search for the first occurrence of **"word"** |
+| **`vim -d file1 file2`** | Open files in **diff mode** for comparison |
+
+
 ## 📂 **Basics**
 
 | Command | Description |
