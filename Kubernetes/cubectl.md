@@ -32,6 +32,10 @@
 | Command | Description |
 |---------|-------------|
 | **`kubectl create deployment my-dep --image=nginx --replicas=3`** | Create a deployment with 3 replicas |
+| **`kubectl create -f replicaset-definition.yaml`** | Create a new replica set |
+| **`kubectl replace -f replicaset-definition.yaml`** | Apply new replica set definition |
+| **`kubectl scale --replicas=6 -f replicaset-definition.yaml`** | Apply new replica set definition |
+| **`kubectl get replicaset`** | Show replica sets |
 | **`kubectl create deploy web --image=wordpress --replicas=10 --dry-run=client -o yaml > deployment.yaml`** | Create a deployment YAML for `wordpress` |
 | **`kubectl get deploy -o wide`** | List deployments with additional details |
 | **`kubectl edit deploy web`** | Edit the `web` deployment |

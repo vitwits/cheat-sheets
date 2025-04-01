@@ -124,5 +124,42 @@ export ETCDCTL_API=3  # Ensure API v3 is used
 export ETCDCTL_ENDPOINTS="http://localhost:2379"
 ```
 
+## Additional Information About ETCDCTL
+ETCDCTL is the CLI tool used to interact with ETCD.
+
+ETCDCTL can interact with ETCD Server using two API versions - Version 2 and Version 3. By default, it is set to use Version 2. Each version has different sets of commands.
+
+For example, ETCDCTL version 2 supports the following commands:
+```sh
+etcdctl backup
+etcdctl cluster-health
+etcdctl mk
+etcdctl mkdir
+etcdctl set
+```
+Whereas the commands in version 3 are different:
+```sh
+etcdctl snapshot save 
+etcdctl endpoint health
+etcdctl get
+etcdctl put
+```
+To set the correct API version, use the environment variable:
+```sh
+export ETCDCTL_API=3
+```
+When the API version is not set, it defaults to version 2, meaning version 3 commands will not work. Conversely, when set to version 3, version 2 commands will not work.
+
+Additionally, to authenticate with the ETCD API Server, specify the path to the required certificate files:
+```sh
+--cacert /etc/kubernetes/pki/etcd/ca.crt     
+--cert /etc/kubernetes/pki/etcd/server.crt     
+--key /etc/kubernetes/pki/etcd/server.key
+```
+For example, the following command correctly sets the API version and specifies the certificate paths:
+```sh
+kubectl exec etcd-master -n kube-system -- sh -c "ETCDCTL_API=3 etcdctl get / --prefix --keys-only --limit=10 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key"
+```
+
 ---
 This cheat sheet covers the most commonly used etcd commands. Adjust the commands as needed based on your environment.
