@@ -1,0 +1,43 @@
+///////////////////////////////////////////
+// Limit CPU and Memory Usage per Namespace
+///////////////////////////////////////////
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-resources
+  namespace: my-namespace
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: "4Gi"
+    limits.cpu: "4"
+    limits.memory: "8Gi"
+
+
+///////////////////////////////////////////
+//  Limit Number of Pods, Services, and PersistentVolumeClaims
+///////////////////////////////////////////
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: object-counts
+  namespace: my-namespace
+spec:
+  hard:
+    pods: "10"
+    services: "5"
+    persistentvolumeclaims: "5"
+
+
+///////////////////////////////////////////
+// Limit ConfigMaps and Secrets
+///////////////////////////////////////////
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: configmap-secret-quota
+  namespace: my-namespace
+spec:
+  hard:
+    configmaps: "10"
+    secrets: "10"

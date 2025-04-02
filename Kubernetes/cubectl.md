@@ -55,7 +55,9 @@
 | **`kubectl run vit-mealie --image=nginx --namespace mealie`** | Run the `nginx` pod in the `mealie` namespace |
 | **`kubectl get pods -n mealie`** | List pods in the `mealie` namespace |
 | **`kubectl get pods -n default`** | List pods in the `default` namespace |
+| **`kubectl get pods --all-namespaces`** | List pods all namespaces |
 | **`kubectl config set-context --current --namespace=mealie`** | Set the default namespace to `mealie` |
+| **`kubectl config set-context $(kubectl config current-context) --namespace=mealie`** | Set the default namespace to `mealie` |
 
 ## 🌐 **Networking**
 | Command | Description |
