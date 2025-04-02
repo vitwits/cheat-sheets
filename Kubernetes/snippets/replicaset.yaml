@@ -1,0 +1,72 @@
+///////////////////////////////////////////
+// Simple ReplicaSet with three Nginx replicas
+///////////////////////////////////////////
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-replicaset
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+
+
+///////////////////////////////////////////
+// ReplicaSet with selection conditions (matchExpressions)
+///////////////////////////////////////////
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: advanced-replicaset
+spec:
+  replicas: 2
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values: ["web", "nginx"]
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+
+
+///////////////////////////////////////////
+// ReplicaSet with environment variables
+///////////////////////////////////////////
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: env-replicaset
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: my-container
+          image: busybox
+          command: ["sh", "-c", "echo $MY_ENV && sleep 3600"]
+          env:
+            - name: MY_ENV
+              value: "Hello from ReplicaSet"

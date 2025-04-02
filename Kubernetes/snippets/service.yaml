@@ -1,0 +1,66 @@
+///////////////////////////////////////////
+// ClusterIP (default) – internal service
+///////////////////////////////////////////
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
+
+///////////////////////////////////////////
+// NodePort – external access via nodes
+///////////////////////////////////////////
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-nodeport
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30007
+  type: NodePort
+
+
+///////////////////////////////////////////
+// LoadBalancer – external load balancer (for cloud providers)
+///////////////////////////////////////////
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-loadbalancer
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+
+
+///////////////////////////////////////////
+// Headless Service (no IP, for StatefulSet or DNS-based discovery)
+///////////////////////////////////////////
+apiVersion: v1
+kind: Service
+metadata:
+  name: headless-service
+spec:
+  selector:
+    app: my-db
+  clusterIP: None
+  ports:
+    - port: 5432
+      targetPort: 5432

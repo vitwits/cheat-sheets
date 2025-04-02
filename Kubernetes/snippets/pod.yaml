@@ -1,0 +1,53 @@
+///////////////////////////////////////////
+// Simple Pod with Nginx
+///////////////////////////////////////////
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+
+
+
+///////////////////////////////////////////
+// Pod with 2 containers (sidecar pattern)
+///////////////////////////////////////////
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-container-pod
+spec:
+  containers:
+    - name: app-container
+      image: busybox
+      command: ["sh", "-c", "echo 'Hello from App' && sleep 3600"]
+    - name: sidecar-container
+      image: busybox
+      command: ["sh", "-c", "echo 'Hello from Sidecar' && sleep 3600"]
+
+
+///////////////////////////////////////////
+// Pod with environment variables
+///////////////////////////////////////////
+apiVersion: v1
+kind: Pod
+metadata:
+  name: env-pod
+spec:
+  containers:
+    - name: env-container
+      image: busybox
+      command: ["sh", "-c", "env && sleep 3600"]
+      env:
+        - name: MY_VAR
+          value: "Hello, Kubernetes!"
+
+
+
