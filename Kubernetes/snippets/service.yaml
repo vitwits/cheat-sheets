@@ -36,7 +36,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30007
+      nodePort: 30007  // 30000-32767
   type: NodePort
 
 ///////////////////////////////////////////
@@ -57,6 +57,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
+      //nodePort: 30008
   type: LoadBalancer
 
 ///////////////////////////////////////////
