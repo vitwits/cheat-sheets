@@ -5,6 +5,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
+  labels:
+    app: nginx
+    tier: frontend
+    env: production
 spec:
   selector:
     app: nginx
@@ -14,7 +18,6 @@ spec:
       targetPort: 80
   type: ClusterIP
 
-
 ///////////////////////////////////////////
 // NodePort – external access via nodes
 ///////////////////////////////////////////
@@ -22,6 +25,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-nodeport
+  labels:
+    app: nginx
+    tier: frontend
+    env: staging
 spec:
   selector:
     app: nginx
@@ -32,7 +39,6 @@ spec:
       nodePort: 30007
   type: NodePort
 
-
 ///////////////////////////////////////////
 // LoadBalancer – external load balancer (for cloud providers)
 ///////////////////////////////////////////
@@ -40,6 +46,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-loadbalancer
+  labels:
+    app: nginx
+    tier: frontend
+    env: production
 spec:
   selector:
     app: nginx
@@ -49,7 +59,6 @@ spec:
       targetPort: 80
   type: LoadBalancer
 
-
 ///////////////////////////////////////////
 // Headless Service (no IP, for StatefulSet or DNS-based discovery)
 ///////////////////////////////////////////
@@ -57,6 +66,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: headless-service
+  labels:
+    app: my-db
+    tier: backend
+    env: production
 spec:
   selector:
     app: my-db

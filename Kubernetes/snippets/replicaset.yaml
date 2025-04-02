@@ -1,72 +1,57 @@
 ///////////////////////////////////////////
-// Simple ReplicaSet with three Nginx replicas
+// Simple Pod with Nginx
 ///////////////////////////////////////////
-apiVersion: apps/v1
-kind: ReplicaSet
+apiVersion: v1
+kind: Pod
 metadata:
-  name: nginx-replicaset
+  name: nginx-pod
+  labels:
+    app: nginx
+    tier: frontend
+    env: production
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-        - name: nginx
-          image: nginx:latest
-          ports:
-            - containerPort: 80
-
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80
 
 ///////////////////////////////////////////
-// ReplicaSet with selection conditions (matchExpressions)
+// Pod with 2 containers (sidecar pattern)
 ///////////////////////////////////////////
-apiVersion: apps/v1
-kind: ReplicaSet
+apiVersion: v1
+kind: Pod
 metadata:
-  name: advanced-replicaset
+  name: multi-container-pod
+  labels:
+    app: multi-container
+    tier: backend
+    env: staging
 spec:
-  replicas: 2
-  selector:
-    matchExpressions:
-      - key: app
-        operator: In
-        values: ["web", "nginx"]
-  template:
-    metadata:
-      labels:
-        app: web
-    spec:
-      containers:
-        - name: nginx
-          image: nginx:latest
-
+  containers:
+    - name: app-container
+      image: busybox
+      command: ["sh", "-c", "echo 'Hello from App' && sleep 3600"]
+    - name: sidecar-container
+      image: busybox
+      command: ["sh", "-c", "echo 'Hello from Sidecar' && sleep 3600"]
 
 ///////////////////////////////////////////
-// ReplicaSet with environment variables
+// Pod with environment variables
 ///////////////////////////////////////////
-apiVersion: apps/v1
-kind: ReplicaSet
+apiVersion: v1
+kind: Pod
 metadata:
-  name: env-replicaset
+  name: env-pod
+  labels:
+    app: env-app
+    tier: database
+    env: development
 spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: myapp
-  template:
-    metadata:
-      labels:
-        app: myapp
-    spec:
-      containers:
-        - name: my-container
-          image: busybox
-          command: ["sh", "-c", "echo $MY_ENV && sleep 3600"]
-          env:
-            - name: MY_ENV
-              value: "Hello from ReplicaSet"
+  containers:
+    - name: env-container
+      image: busybox
+      command: ["sh", "-c", "env && sleep 3600"]
+      env:
+        - name: MY_VAR
+          value: "Hello, Kubernetes!"

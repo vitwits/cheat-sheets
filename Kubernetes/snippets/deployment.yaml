@@ -5,6 +5,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
+  labels:
+    app: nginx
 spec:
   replicas: 3
   selector:
@@ -12,6 +14,7 @@ spec:
       app: nginx
   template:
     metadata:
+      name: nginx-template
       labels:
         app: nginx
     spec:
@@ -21,8 +24,6 @@ spec:
           ports:
             - containerPort: 80
 
-
-
 ///////////////////////////////////////////
 // Deployment with Environment Variables
 ///////////////////////////////////////////
@@ -30,6 +31,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: env-deployment
+  labels:
+    app: myapp
 spec:
   replicas: 2
   selector:
@@ -37,6 +40,7 @@ spec:
       app: myapp
   template:
     metadata:
+      name: env-template
       labels:
         app: myapp
     spec:
@@ -48,8 +52,6 @@ spec:
             - name: MY_ENV
               value: "Hello from Deployment"
 
-
-
 ///////////////////////////////////////////
 // Rolling Update Deployment
 ///////////////////////////////////////////
@@ -57,6 +59,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rolling-update-deployment
+  labels:
+    app: rolling-app
 spec:
   replicas: 2
   strategy:
@@ -69,6 +73,7 @@ spec:
       app: rolling-app
   template:
     metadata:
+      name: rolling-template
       labels:
         app: rolling-app
     spec:
@@ -78,8 +83,6 @@ spec:
           ports:
             - containerPort: 80
 
-
-
 ///////////////////////////////////////////
 // Deployment with Resource Limits
 ///////////////////////////////////////////
@@ -87,6 +90,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: resource-limits-deployment
+  labels:
+    app: limited-app
 spec:
   replicas: 2
   selector:
@@ -94,6 +99,7 @@ spec:
       app: limited-app
   template:
     metadata:
+      name: resource-limits-template
       labels:
         app: limited-app
     spec:
@@ -108,15 +114,15 @@ spec:
               memory: "128Mi"
               cpu: "500m"
 
-
-
 ///////////////////////////////////////////
-// Deployment with Readiness and Liveness Probes
+// Deployment with Readiness and Liveness Probes (Corrected)
 ///////////////////////////////////////////
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: probes-deployment
+  labels:
+    app: probes-app
 spec:
   replicas: 2
   selector:
@@ -124,6 +130,7 @@ spec:
       app: probes-app
   template:
     metadata:
+      name: probes-template
       labels:
         app: probes-app
     spec:
