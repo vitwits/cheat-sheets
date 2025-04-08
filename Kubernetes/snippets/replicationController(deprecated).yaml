@@ -1,19 +1,21 @@
 #############################################
-## Minimal ReplicaSet
+## Minimal ReplicationController
 #############################################
-apiVersion: apps/v1
-kind: ReplicaSet
+apiVersion: v1
+kind: ReplicationController
 metadata:
-  name: my-rs
+  name: my-rc-with-labels
+  labels:
+    environment: development
+    team: backend
 spec:
-  replicas: 3
+  replicas: 2
   selector:
-    matchLabels:
-      app: myapp
+    app: my-app
   template:
     metadata:
       labels:
-        app: myapp
+        app: my-app
     spec:
       containers:
       - name: my-container
@@ -21,4 +23,4 @@ spec:
         ports:
         - containerPort: 80
 
-# Replica Set requires matchLabels
+# Selector is not obligatory

@@ -1,6 +1,6 @@
-///////////////////////////////////////////
-// ClusterIP (default) – internal service
-///////////////////////////////////////////
+#############################################
+## ClusterIP (default) – internal service
+#############################################
 apiVersion: v1
 kind: Service
 metadata:
@@ -18,9 +18,9 @@ spec:
       targetPort: 80
   type: ClusterIP
 
-///////////////////////////////////////////
-// NodePort – external access via nodes
-///////////////////////////////////////////
+#############################################
+## NodePort – external access via nodes
+#############################################
 apiVersion: v1
 kind: Service
 metadata:
@@ -36,12 +36,12 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30007  // 30000-32767
+      nodePort: 30007  #30000-32767
   type: NodePort
 
-///////////////////////////////////////////
-// LoadBalancer – external load balancer (for cloud providers)
-///////////////////////////////////////////
+#############################################
+## LoadBalancer – external load balancer (for cloud providers)
+#############################################
 apiVersion: v1
 kind: Service
 metadata:
@@ -57,12 +57,12 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      //nodePort: 30008
+      # nodePort: 30008
   type: LoadBalancer
 
-///////////////////////////////////////////
-// Headless Service (no IP, for StatefulSet or DNS-based discovery)
-///////////////////////////////////////////
+#############################################
+## Headless Service (no IP, for StatefulSet or DNS-based discovery)
+#############################################
 apiVersion: v1
 kind: Service
 metadata:

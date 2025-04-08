@@ -1,6 +1,6 @@
-///////////////////////////////////////////
-// Simple Pod with Nginx
-///////////////////////////////////////////
+#############################################
+## Simple Pod with Nginx
+#############################################
 apiVersion: v1
 kind: Pod
 metadata:
@@ -14,9 +14,9 @@ spec:
       ports:
         - containerPort: 80
 
-///////////////////////////////////////////
-// Pod with 2 containers (sidecar pattern)
-///////////////////////////////////////////
+#############################################
+## Pod with 2 containers (sidecar pattern)
+#############################################
 apiVersion: v1
 kind: Pod
 metadata:
@@ -32,9 +32,9 @@ spec:
       image: busybox
       command: ["sh", "-c", "echo 'Hello from Sidecar' && sleep 3600"]
 
-///////////////////////////////////////////
-// Pod with environment variables
-///////////////////////////////////////////
+#############################################
+## Pod with environment variables
+#############################################
 apiVersion: v1
 kind: Pod
 metadata:

@@ -1,6 +1,6 @@
-///////////////////////////////////////////
-// Basic Deployment with Nginx
-///////////////////////////////////////////
+#############################################
+## Basic Deployment with Nginx
+#############################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,9 +24,9 @@ spec:
           ports:
             - containerPort: 80
 
-///////////////////////////////////////////
-// Deployment with Environment Variables
-///////////////////////////////////////////
+#############################################
+## Deployment with Environment Variables
+#############################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -52,9 +52,9 @@ spec:
             - name: MY_ENV
               value: "Hello from Deployment"
 
-///////////////////////////////////////////
-// Rolling Update Deployment
-///////////////////////////////////////////
+#############################################
+## Rolling Update Deployment
+#############################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -83,9 +83,9 @@ spec:
           ports:
             - containerPort: 80
 
-///////////////////////////////////////////
-// Deployment with Resource Limits
-///////////////////////////////////////////
+#############################################
+## Deployment with Resource Limits
+#############################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -114,9 +114,9 @@ spec:
               memory: "128Mi"
               cpu: "500m"
 
-///////////////////////////////////////////
-// Deployment with Readiness and Liveness Probes (Corrected)
-///////////////////////////////////////////
+#############################################
+## Deployment with Readiness and Liveness Probes (Corrected)
+#############################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:

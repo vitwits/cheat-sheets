@@ -1,6 +1,6 @@
-///////////////////////////////////////////
-// Limit CPU and Memory Usage per Namespace
-///////////////////////////////////////////
+#############################################
+## Limit CPU and Memory Usage per Namespace
+#############################################
 apiVersion: v1
 kind: ResourceQuota
 metadata:
@@ -14,9 +14,9 @@ spec:
     limits.memory: "8Gi"
 
 
-///////////////////////////////////////////
-//  Limit Number of Pods, Services, and PersistentVolumeClaims
-///////////////////////////////////////////
+#############################################
+## Limit Number of Pods, Services, and PersistentVolumeClaims
+#############################################
 apiVersion: v1
 kind: ResourceQuota
 metadata:
@@ -29,9 +29,9 @@ spec:
     persistentvolumeclaims: "5"
 
 
-///////////////////////////////////////////
-// Limit ConfigMaps and Secrets
-///////////////////////////////////////////
+#############################################
+## Limit ConfigMaps and Secrets
+#############################################
 apiVersion: v1
 kind: ResourceQuota
 metadata:
