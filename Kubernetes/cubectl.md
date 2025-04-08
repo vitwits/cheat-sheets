@@ -40,6 +40,7 @@
 | **`kubectl get deploy -o wide`** | List deployments with additional details |
 | **`kubectl edit deploy web`** | Edit the `web` deployment |
 | **`kubectl describe deploy web`** | Show details of the `web` deployment |
+| **`kubectl replace --force -f deployment.yaml`** | Deletes and recreates all existing resources |
 | **`kubectl delete deployments.apps web`** | Delete the `web` deployment |
 | **`kubectl apply -f wordpress-deploy.yaml`** | Apply a deployment from `wordpress-deploy.yaml` |
 | **`kubectl get replicaset`** | Get the list of ReplicaSets |
@@ -71,6 +72,7 @@
 | Command | Description |
 |---------|-------------|
 | **`kubectl apply -f <file>.yaml`** | Apply changes from a YAML file |
+| **`kubectl apply -f /path/to/config-files`** | Create all the objects at once |
 | **`kubectl delete -f <file>.yaml`** | Delete resources defined in a YAML file |
 | **`kubectl explain <resource>`** | Show API documentation for a resource |
 | **`kubectl version --short`** | Display Kubernetes client and server version |
