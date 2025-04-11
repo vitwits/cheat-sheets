@@ -1,25 +1,5 @@
 #############################################
-## ClusterIP (default) – internal service
-#############################################
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-  labels:
-    app: nginx
-    tier: frontend
-    env: production
-spec:
-  selector:
-    app: nginx
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: ClusterIP
-
-#############################################
-## NodePort – external access via nodes
+## NodePort – external access via nodes (multiple pods also)
 #############################################
 apiVersion: v1
 kind: Service
@@ -39,6 +19,28 @@ spec:
       nodePort: 30007  #30000-32767
   type: NodePort
 
+
+#############################################
+## ClusterIP (default) – internal service
+#############################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    app: nginx
+    tier: frontend
+    env: production
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
+
 #############################################
 ## LoadBalancer – external load balancer (for cloud providers)
 #############################################
@@ -57,7 +59,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      # nodePort: 30008
+      nodePort: 30008
   type: LoadBalancer
 
 #############################################

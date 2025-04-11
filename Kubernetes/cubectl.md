@@ -17,12 +17,14 @@
 | **`kubectl get pods -A`** | Pods on all namespaces |
 | **`kubectl get pods -n mealie`** | Pods in the `mealie` namespace |
 | **`kubectl get pods --namespace mealie`** | Pods in the `mealie` namespace |
+| **`kubectl get pods -l app=nginx,env=prod`** | Get pods by labels |
 | **`kubectl get pod wordpress`** | Get details of the `wordpress` pod |
 | **`kubectl get pod wordpress \| less`** | View the `wordpress` pod details with paging |
 | **`kubectl exec -it mealie-799f5c9d55-tqjbp -- bash`** | Connect to the `mealie` pod |
 | **`kubectl describe pod wordpress`** | Show detailed information about the `wordpress` pod |
 | **`kubectl edit pod wordpress`** | Edit the `wordpress` pod |
 | **`kubectl run hazelcast --image=hazelcast/hazelcast --port=5701`** | Run the `hazelcast` pod |
+| **`kubectl run my-pod --image=nginx --labels="app=nginx,env=dev"`** | Run pod with labels |
 | **`kubectl run nginx --image=nginx`** | Run the `nginx` pod |
 | **`kubectl run -h \| less`** | Show `kubectl run` options |
 | **`kubectl create -f nginx.yaml`** | Create a resource from `nginx.yaml` |
