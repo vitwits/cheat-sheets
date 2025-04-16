@@ -1,5 +1,5 @@
 #############################################
-## NodePort – external access via nodes (multiple pods also)
+## NodePort Service – external access via nodes (multiple pods also)
 #############################################
 apiVersion: v1
 kind: Service
@@ -21,7 +21,7 @@ spec:
 
 
 #############################################
-## ClusterIP (default) – internal service
+## ClusterIP Service (default) – internal service
 #############################################
 apiVersion: v1
 kind: Service
@@ -42,7 +42,7 @@ spec:
 
 
 #############################################
-## LoadBalancer – external load balancer (for cloud providers)
+## LoadBalancer Service – external load balancer (for cloud providers)
 #############################################
 apiVersion: v1
 kind: Service

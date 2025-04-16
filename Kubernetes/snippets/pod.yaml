@@ -70,6 +70,34 @@ spec:
     value: "mortein"
     effect: "NoSchedule"
 
+#### ⚙️ **Operators** and Their Effects
+#
+#### 1. **`Equal`**  
+#   - The **toleration** will match only if the taint's **key** and **value** are exactly equal.
+#   - Commonly used to match specific taints to tolerate.
+#
+#### 2. **`Exists`**  
+#   - The toleration will match if the **key** exists in the taint, **regardless of the value**.
+#   - This is useful when you don't care about the specific value of the taint, just the key.
+#
+##### 3. **`NotEqual`**  
+#   - The toleration will match if the **key** exists and the **value** is **not equal** to the taint's value.
+#   - Useful when you want to avoid a specific taint value but still allow for other values of the same key.
+
+
+#### 🌟 **Effect**:
+#
+#The effect field determines the behavior when a Pod does or does not tolerate a taint:
+#
+#- **`NoSchedule`**:  
+#  The Pod **will not** be scheduled onto the node unless the taint is tolerated by the Pod. If the taint matches the toleration, the Pod will be scheduled.
+#
+#- **`PreferNoSchedule`**:  
+#  Kubernetes will try to avoid scheduling the Pod on the node, but **it's not enforced**. The scheduler will try to place the Pod elsewhere if possible.
+#
+#- **`NoExecute`**:  
+#  If the taint matches, Pods that are already running on the node and do **not** tolerate the taint will be **evicted**. New Pods won't be scheduled onto the node unless they tolerate the taint.
+
 
 #############################################
 ## Pod with node selector
@@ -162,3 +190,20 @@ spec:
 #
 #✅ **Tip**:  
 #- Use **binary units** (`Mi`, `Gi`, etc. — *Mebibytes*, *Gibibytes*) in Kubernetes for better accuracy and alignment with how memory is handled in Linux systems.
+
+### ⚖️ Kubernetes Resource Requests vs Limits
+#
+#| Aspect             | `resources.requests`                          | `resources.limits`                            |
+#|--------------------|-----------------------------------------------|------------------------------------------------|
+#| ✅ **Purpose**     | Minimum amount of resource guaranteed         | Maximum amount the Pod **can** use             |
+#| 📦 **When applied**| During **scheduling** of the Pod              | During **runtime**                             |
+#| 💡 **Scheduler**   | Uses this to decide **where** to place Pod    | **Not** used for scheduling                    |
+#| 💻 **CPU Behavior**| Guaranteed to get at least this much CPU      | Throttled if it tries to use more than this    |
+#| 🧠 **Memory Behavior** | Can use more until limit is reached       | Killed if it exceeds this limit (OOMKill)      |
+#| ⚙️ **Example**     | `cpu: 100m`, `memory: 128Mi`                  | `cpu: 500m`, `memory: 256Mi`                   |
+#| 💬 **Analogy**     | "I need at least this much to run"            | "I promise not to use more than this"          |
+#|--------------------|-----------------------------------------------|------------------------------------------------|
+# 💡💡💡 POD WITH **REQUESTS** AND NO **LIMITS** IS THE MOST IDEAL CASE 💡💡💡                                           |
+# 💡💡 NEVER USE POD WITHOUT **REQUESTS** IF NO **LIMITS** SET. SOME PODS MAY CONSUME ALL RESOUCES AND OTHER PODS WILL NOT START 💡💡 |
+# 💡 IF NO **REQUSTS** SET BUT ONLY **LIMITS** IT WILL BE CONSIDERED THE SAME AS **LIMITS** 💡                          |
+#|--------------------|-----------------------------------------------|------------------------------------------------|

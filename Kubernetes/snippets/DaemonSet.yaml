@@ -1,0 +1,29 @@
+#############################################
+## DaemonSet
+#############################################
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: example-daemonset
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: example-daemon
+  template:
+    metadata:
+      labels:
+        name: example-daemon
+    spec:
+      containers:
+      - name: example-container
+        image: busybox
+        command: ["/bin/sh", "-c", "while true; do echo Hello from the DaemonSet; sleep 30; done"]
+
+
+### 📦 Kubernetes DaemonSet
+
+A **DaemonSet** ensures that a copy of a Pod runs on **all (or some)** nodes in a cluster. 
+It's typically used for background tasks such as log collection, monitoring, or networking (e.g. CNI plugins).
+
+---
