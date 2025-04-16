@@ -23,7 +23,7 @@ spec:
 
 ### 📦 Kubernetes DaemonSet
 
-A **DaemonSet** ensures that a copy of a Pod runs on **all (or some)** nodes in a cluster. 
+A **DaemonSet** ensures that a copy 💡(only one) of a Pod runs on **all (or some)** nodes in a cluster. 
 It's typically used for background tasks such as log collection, monitoring, or networking (e.g. CNI plugins).
 
 ---
