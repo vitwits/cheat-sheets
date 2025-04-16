@@ -49,3 +49,116 @@ spec:
       env:
         - name: MY_VAR
           value: "Hello, Kubernetes!"
+
+
+#############################################
+## Pod with tolerations
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: bee
+  name: bee
+spec:
+  containers:
+  - image: nginx
+    name: bee
+  tolerations:
+  - key: "spray"
+    operator: "Equal"
+    value: "mortein"
+    effect: "NoSchedule"
+
+
+#############################################
+## Pod with node selector
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-with-nodeselector
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+  nodeSelector:
+    disktype: ssd
+
+
+#############################################
+## Pod with node affinity (required)
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-with-node-affinity
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:   # if label not available, pod will not be scheduled
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: disktype
+            operator: In
+            values:
+            - ssd
+
+
+#############################################
+## Pod with node affinity (preferred)
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-preferred-node-affinity
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:  # if no label, use whatever node is available
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: disktype
+            operator: In
+            values:
+            - ssd
+            - nvme
+
+
+#############################################
+## Pod with resources request
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resource-demo
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"  # 0.25 (250m) cpu core (thread)
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+
+### 📊 Memory Units in Kubernetes (Decimal vs Binary)
+
+| Value  | Type     | YAML Format | Bytes            | Approx. in MB  | Unit Name     |
+|--------|----------|-------------|------------------|----------------|---------------|
+| 512M   | Decimal  | `512M`      | 512,000,000      | 512.0 MB       | Megabytes     |
+| 512Mi  | Binary   | `512Mi`     | 536,870,912      | 536.9 MB       | Mebibytes     |
+| 1G     | Decimal  | `1G`        | 1,000,000,000    | 1000 MB        | Gigabytes     |
+| 1Gi    | Binary   | `1Gi`       | 1,073,741,824    | 1073.7 MB      | Gibibytes     |
+
+✅ **Tip**:  
+- Use **binary units** (`Mi`, `Gi`, etc. — *Mebibytes*, *Gibibytes*) in Kubernetes for better accuracy and alignment with how memory is handled in Linux systems.

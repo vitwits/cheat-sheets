@@ -20,6 +20,7 @@
 | **`kubectl get pods -l app=nginx,env=prod`** | Get pods by labels |
 | **`kubectl get pod wordpress`** | Get details of the `wordpress` pod |
 | **`kubectl get pod wordpress \| less`** | View the `wordpress` pod details with paging |
+| **`kubectl get all -l env=prod`** | View the resources with specific label |
 | **`kubectl exec -it mealie-799f5c9d55-tqjbp -- bash`** | Connect to the `mealie` pod |
 | **`kubectl describe pod wordpress`** | Show detailed information about the `wordpress` pod |
 | **`kubectl edit pod wordpress`** | Edit the `wordpress` pod |
@@ -47,6 +48,15 @@
 | **`kubectl apply -f wordpress-deploy.yaml`** | Apply a deployment from `wordpress-deploy.yaml` |
 | **`kubectl get replicaset`** | Get the list of ReplicaSets |
 | **`kubectl describe replicaset wordpress-group-75cfdc8d8d`** | Describe a specific ReplicaSet |
+
+## 🧑‍🔧 **Nodes**
+| Command | Description |
+|---------|-------------|
+| **`kubectl taint node node01 spray=mortein:NoSchedule`** | Add taint to a node |
+| **`kubectl taint nodes <node-name> special=dedicated:NoSchedule-`** | Remove a taint from a node |
+| **`kubectl taint node controlplane node-role.kubernetes.io/control-plane:NoSchedule-`** | Remove taint using only key and effect |
+| **`kubectl label nodes node-1 size=Large`** | Assign a label to a node |
+| **`kubectl get nodes node01 --show-labels`** | Show assigned labels to a node |
 
 ## 🧑‍🔧 **Namespaces**
 | Command | Description |
@@ -96,8 +106,8 @@
 ## 💾 **Volumes and Storage**
 | Command | Description |
 |---------|-------------|
-| **`k get persistentvolumes`** | Show detailed information about a persistent volumes `PV` |
-| **`k get persistentvolumeclaims`** | Show information about persistent volume claims `PVC` |
+| **`kubectl get persistentvolumes`** | Show detailed information about a persistent volumes `PV` |
+| **`kubectl get persistentvolumeclaims`** | Show information about persistent volume claims `PVC` |
 
 
 
