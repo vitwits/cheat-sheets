@@ -152,13 +152,13 @@ spec:
         cpu: "500m"
 
 ### 📊 Memory Units in Kubernetes (Decimal vs Binary)
-
-| Value  | Type     | YAML Format | Bytes            | Approx. in MB  | Unit Name     |
-|--------|----------|-------------|------------------|----------------|---------------|
-| 512M   | Decimal  | `512M`      | 512,000,000      | 512.0 MB       | Megabytes     |
-| 512Mi  | Binary   | `512Mi`     | 536,870,912      | 536.9 MB       | Mebibytes     |
-| 1G     | Decimal  | `1G`        | 1,000,000,000    | 1000 MB        | Gigabytes     |
-| 1Gi    | Binary   | `1Gi`       | 1,073,741,824    | 1073.7 MB      | Gibibytes     |
-
-✅ **Tip**:  
-- Use **binary units** (`Mi`, `Gi`, etc. — *Mebibytes*, *Gibibytes*) in Kubernetes for better accuracy and alignment with how memory is handled in Linux systems.
+#
+#| Value  | Type     | YAML Format | Bytes            | Approx. in MB  | Unit Name     |
+#|--------|----------|-------------|------------------|----------------|---------------|
+#| 512M   | Decimal  | `512M`      | 512,000,000      | 512.0 MB       | Megabytes     |
+#| 512Mi  | Binary   | `512Mi`     | 536,870,912      | 536.9 MB       | Mebibytes     |
+#| 1G     | Decimal  | `1G`        | 1,000,000,000    | 1000 MB        | Gigabytes     |
+#| 1Gi    | Binary   | `1Gi`       | 1,073,741,824    | 1073.7 MB      | Gibibytes     |
+#
+#✅ **Tip**:  
+#- Use **binary units** (`Mi`, `Gi`, etc. — *Mebibytes*, *Gibibytes*) in Kubernetes for better accuracy and alignment with how memory is handled in Linux systems.
