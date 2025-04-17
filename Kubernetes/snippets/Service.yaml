@@ -1,0 +1,82 @@
+#############################################
+## NodePort Service – external access via nodes (multiple pods also)
+#############################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-nodeport
+  labels:
+    app: nginx
+    tier: frontend
+    env: staging
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30007  #30000-32767
+  type: NodePort
+
+
+#############################################
+## ClusterIP Service (default) – internal service
+#############################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    app: nginx
+    tier: frontend
+    env: production
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
+
+#############################################
+## LoadBalancer Service – external load balancer (for cloud providers)
+#############################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-loadbalancer
+  labels:
+    app: nginx
+    tier: frontend
+    env: production
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30008
+  type: LoadBalancer
+
+#############################################
+## Headless Service (no IP, for StatefulSet or DNS-based discovery)
+#############################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: headless-service
+  labels:
+    app: my-db
+    tier: backend
+    env: production
+spec:
+  selector:
+    app: my-db
+  clusterIP: None
+  ports:
+    - port: 5432
+      targetPort: 5432

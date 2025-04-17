@@ -1,0 +1,26 @@
+#############################################
+## Minimal ReplicationController
+#############################################
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: my-rc-with-labels
+  labels:
+    environment: development
+    team: backend
+spec:
+  replicas: 2
+  selector:
+    app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+
+# Selector is not obligatory

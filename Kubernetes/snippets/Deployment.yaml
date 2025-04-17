@@ -1,0 +1,153 @@
+#############################################
+## Basic Deployment with Nginx
+#############################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      name: nginx-template
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+
+#############################################
+## Deployment with Environment Variables
+#############################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: env-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      name: env-template
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: my-container
+          image: busybox
+          command: ["sh", "-c", "echo $MY_ENV && sleep 3600"]
+          env:
+            - name: MY_ENV
+              value: "Hello from Deployment"
+
+#############################################
+## Rolling Update Deployment
+#############################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rolling-update-deployment
+  labels:
+    app: rolling-app
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: rolling-app
+  template:
+    metadata:
+      name: rolling-template
+      labels:
+        app: rolling-app
+    spec:
+      containers:
+        - name: rolling-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+
+#############################################
+## Deployment with Resource Limits
+#############################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-limits-deployment
+  labels:
+    app: limited-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: limited-app
+  template:
+    metadata:
+      name: resource-limits-template
+      labels:
+        app: limited-app
+    spec:
+      containers:
+        - name: limited-container
+          image: nginx:latest
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+
+#############################################
+## Deployment with Readiness and Liveness Probes (Corrected)
+#############################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: probes-deployment
+  labels:
+    app: probes-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: probes-app
+  template:
+    metadata:
+      name: probes-template
+      labels:
+        app: probes-app
+    spec:
+      containers:
+        - name: probes-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
