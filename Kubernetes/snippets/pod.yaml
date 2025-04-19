@@ -115,6 +115,37 @@ spec:
 
 
 #############################################
+## Pod with override command, completely replacing the image’s default ENTRYPOINT
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: override-command-pod
+spec:
+  containers:
+  - name: alpine
+    image: alpine:latest
+    command: ["sleep", "5000"]
+    # command:
+    # - "sleep"
+    # - "1200"
+
+#############################################
+## Pod with override args, this keeps the image's ENTRYPOINT (like /bin/sh), but changes the CMD arguments
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-override-args-pod
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu:latest
+    args: ["-c", "echo Hello from args && sleep 3600"]
+
+
+
+#############################################
 ## Pod with node affinity (required)
 #############################################
 apiVersion: v1
@@ -174,7 +205,7 @@ spec:
     resources:
       requests:
         memory: "64Mi"
-        cpu: "250m"  # 0.25 (250m) cpu core (thread)
+        cpu: "250m"  # 0.25 (250m - milli) cpu core (thread)
       limits:
         memory: "128Mi"
         cpu: "500m"

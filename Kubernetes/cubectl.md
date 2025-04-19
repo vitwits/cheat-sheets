@@ -48,6 +48,16 @@
 | **`kubectl apply -f wordpress-deploy.yaml`** | Apply a deployment from `wordpress-deploy.yaml` |
 | **`kubectl get replicaset`** | Get the list of ReplicaSets |
 | **`kubectl describe replicaset wordpress-group-75cfdc8d8d`** | Describe a specific ReplicaSet |
+| **`kubectl set image deployment/my_deployment webapp=nginx:1.9.1`** | Set a new image for an existing deployment |
+
+## 🚀 **Rollout**
+| Command | Description |
+|---------|-------------|
+| **`kubectl rollout status deployment/<deployment-name>`** | Check the status of a deployment rollout |
+| **`kubectl rollout history deployment/<deployment-name>`** | View the rollout history of a deployment |
+| **`kubectl rollout undo deployment/<deployment-name>`** | Roll back to the previous deployment version |
+| **`kubectl rollout restart deployment/<deployment-name>`** | Restart the deployment to trigger a fresh rollout |
+
 
 ## 🧑‍🔧 **Nodes**
 | Command | Description |
@@ -100,8 +110,25 @@
 | **`kubectl top nodes`** | Show resource usage of nodes |
 | **`kubectl get pods --field-selector=status.phase=Pending`** | List only pending pods |
 | **`kubectl get pods --sort-by=.status.startTime`** | Sort pods by start time |
-| **`kubectl logs <pod_name>`** | Get pod logs |
-| **`kubectl logs <pod_name> -c <container_name>`** | Get pod logs of a cpecific container |
+| **`kubectl logs <pod_name>`** | Get logs of the default container in a pod |
+| **`kubectl logs <pod_name> -c <container_name>`** | Get logs of a specific container in a pod |
+| **`kubectl logs <pod_name> -f`** | Stream (follow) logs in real-time (like `tail -f`) |
+| **`kubectl logs <pod_name> --since=1h`** | Show logs from the last 1 hour |
+| **`kubectl logs <pod_name> --tail=100`** | Show only the last 100 lines of logs |
+| **`kubectl logs <pod_name> --previous`** | Show logs from the previously terminated container |
+| **`kubectl logs -l app=myapp`** | Show logs from pods matching a label selector |
+
+## ⚙️ **ConfigMap Commands**
+| Command | Description |
+|---------|-------------|
+| **`kubectl create configmap my-config --from-file=app.properties`** | Create ConfigMap from a single file |
+| **`kubectl create configmap my-config --from-file=./config/`** | Create ConfigMap from all files in a directory |
+| **`kubectl create configmap my-config --from-literal=KEY=VALUE`** | Create ConfigMap from literal key-value pairs |
+| **`kubectl get configmaps`** | List all ConfigMaps in the current namespace |
+| **`kubectl describe configmap my-config`** | Show detailed information about a specific ConfigMap |
+| **`kubectl delete configmap my-config`** | Delete a specific ConfigMap |
+| **`kubectl apply -f configmap.yaml`** | Create or update ConfigMap from a YAML manifest |
+| **`kubectl get configmap my-config -o yaml`** | Get full YAML output of a ConfigMap |
 
 ## 💾 **Volumes and Storage**
 | Command | Description |
@@ -109,7 +136,16 @@
 | **`kubectl get persistentvolumes`** | Show detailed information about a persistent volumes `PV` |
 | **`kubectl get persistentvolumeclaims`** | Show information about persistent volume claims `PVC` |
 
-
+## 📊 **Metrics Server Commands**
+| Command | Description |
+|---------|-------------|
+| **`kubectl top nodes`** | Show resource usage (CPU/Memory) for all nodes |
+| **`kubectl top pods`** | Show resource usage for all pods in the current namespace |
+| **`kubectl top pods -n <namespace>`** | Show pod metrics in a specific namespace |
+| **`kubectl top pod <pod-name> --containers`** | Show metrics for all containers in a pod |
+| **`kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml`** | Install Metrics Server from the official release |
+| **`kubectl get deployment metrics-server -n kube-system`** | Check if the Metrics Server is deployed |
+| **`kubectl logs -n kube-system deployment/metrics-server`** | View logs for troubleshooting |
 
 
 # 📌 Popular Abbreviations in Kubernetes
