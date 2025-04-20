@@ -144,6 +144,60 @@ spec:
     args: ["-c", "echo Hello from args && sleep 3600"]
 
 
+#############################################
+## Pod using configMap file
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app-pod
+spec:
+  containers:
+    - name: web-app-container
+      image: busybox
+      command: ["sh", "-c", "env; sleep 3600"]
+      envFrom:
+        - configMapRef:
+            name: web-config
+
+#############################################
+## Pod using on a single env variable from a configMap
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app-pod
+spec:
+  containers:
+    - name: web-app-container
+      image: busybox
+      command: ["sh", "-c", "echo $SITE_MODE && sleep 3600"]
+      env:
+        - name: SITE_MODE
+          valueFrom:
+            configMapKeyRef:
+              name: web-config
+              key: SITE_MODE
+
+
+#############################################
+## Pod using manual env entries
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-web-app-pod
+spec:
+  containers:
+    - name: my-web-app-container
+      image: busybox
+      command: ["sh", "-c", "echo $SITE_MODE && echo $SERVER_PORT && sleep 3600"]
+      env:
+        - name: SITE_MODE
+          value: "production"
+        - name: SERVER_PORT
+          value: "8080"  
+
 
 #############################################
 ## Pod with node affinity (required)

@@ -118,6 +118,7 @@
 | **`kubectl logs <pod_name> --previous`** | Show logs from the previously terminated container |
 | **`kubectl logs -l app=myapp`** | Show logs from pods matching a label selector |
 
+
 ## ⚙️ **ConfigMap Commands**
 | Command | Description |
 |---------|-------------|
@@ -129,6 +130,20 @@
 | **`kubectl delete configmap my-config`** | Delete a specific ConfigMap |
 | **`kubectl apply -f configmap.yaml`** | Create or update ConfigMap from a YAML manifest |
 | **`kubectl get configmap my-config -o yaml`** | Get full YAML output of a ConfigMap |
+
+
+## 🔐 **Secrets**
+| Command | Description |
+|---------|-------------|
+| **`kubectl get secrets`** | Show all secrets in the current namespace |
+| **`kubectl describe secret <name>`** | Show detailed information about a specific secret |
+| **`kubectl create secret generic <name> --from-literal=key=value`** | Create a secret from a key-value pair |
+| **`kubectl create secret generic <name> --from-file=path/to/file`** | Create a secret from a file |
+| **`kubectl create -f secret.yaml`** | Create a secret from a YAML file |
+| **`kubectl apply -f secret.yaml`** | Create or update a secret from a YAML file |
+| **`kubectl delete secret <name>`** | Delete a specific secret |
+| **`kubectl edit secret <name>`** | Edit the secret using the default editor |
+
 
 ## 💾 **Volumes and Storage**
 | Command | Description |

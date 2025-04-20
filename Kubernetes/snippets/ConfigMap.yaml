@@ -1,0 +1,27 @@
+#############################################
+## Basic ConfigMap (Key-Value Pairs)
+#############################################
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+  namespace: default  # optional
+data:
+  APP_ENV: "production"
+  APP_PORT: "8080"
+  DB_HOST: "localhost"
+  DB_PORT: "5432"
+
+
+#############################################
+## ConfigMap with File Content (Multiline)
+#############################################
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  app.properties: |
+    key1=value1
+    key2=value2
+    key3=value3
