@@ -196,7 +196,41 @@ spec:
         - name: SITE_MODE
           value: "production"
         - name: SERVER_PORT
-          value: "8080"  
+          value: "8080"
+
+#############################################
+## Pod with attached SECRET file
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-envfrom-example
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    envFrom:
+    - secretRef:
+        name: my-secret
+
+#############################################
+## Pod with injected SINGLE SECRET ENV value
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-single-env
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    env:
+    - name: API_KEY  # this name can be changed for current needs (use as)
+      valueFrom:
+        secretKeyRef:
+          name: my-secret
+          key: API_KEY  # this is the actual env key name in secret file
+
 
 
 #############################################

@@ -30,6 +30,7 @@
 | **`kubectl run -h \| less`** | Show `kubectl run` options |
 | **`kubectl create -f nginx.yaml`** | Create a resource from `nginx.yaml` |
 | **`kubectl apply -f nginx.yaml`** | Create or update a resource from `nginx.yaml` |
+| **`kubectl replace --force -f webapp-pod.yaml`** | Delete existing and create a new pod |
 
 ## 📦 **Deployment & Scaling**
 | Command | Description |
@@ -138,6 +139,7 @@
 | **`kubectl get secrets`** | Show all secrets in the current namespace |
 | **`kubectl describe secret <name>`** | Show detailed information about a specific secret |
 | **`kubectl create secret generic <name> --from-literal=key=value`** | Create a secret from a key-value pair |
+| **`kubectl create secret generic my-secret --from-literal=username=admin --from-literal=password=SuperSecret123`** | Several pairs |
 | **`kubectl create secret generic <name> --from-file=path/to/file`** | Create a secret from a file |
 | **`kubectl create -f secret.yaml`** | Create a secret from a YAML file |
 | **`kubectl apply -f secret.yaml`** | Create or update a secret from a YAML file |
