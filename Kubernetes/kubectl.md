@@ -101,6 +101,8 @@
 | **`kubectl version --short`** | Display Kubernetes client and server version |
 | **`kubectl get all`** | List all resources in the current namespace |
 | **`kubectl get all -n mealie`** | List all resources in the specific namespace |
+| **`kubectl get --raw='/readyz?verbose'`** | Verify all the cluster component health statuses |
+| **`kubectl cluster-info`** | Get cluster info |
 
 ## 🔍 **Debugging & Troubleshooting**
 | Command | Description |
@@ -137,6 +139,7 @@
 | Command | Description |
 |---------|-------------|
 | **`kubectl get secrets`** | Show all secrets in the current namespace |
+| **`kubectl get secrets my-secrets -o yaml`** | Show secret in yaml format |
 | **`kubectl describe secret <name>`** | Show detailed information about a specific secret |
 | **`kubectl create secret generic <name> --from-literal=key=value`** | Create a secret from a key-value pair |
 | **`kubectl create secret generic my-secret --from-literal=username=admin --from-literal=password=SuperSecret123`** | Several pairs |
