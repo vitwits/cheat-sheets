@@ -181,6 +181,58 @@
 | **`kubectl logs -n kube-system deployment/metrics-server`** | View logs for troubleshooting |
 
 
+## 🛠️ **Cluster and Node Maintenance Commands**
+| Command | Description |
+|---------|-------------|
+| **`kubectl cordon <node-name>`** | Mark a node as unschedulable (prevent new pods) |
+| **`kubectl drain <node-name> --ignore-daemonsets --delete-emptydir-data`** | Safely evict pods from a node for maintenance |
+| **`kubectl uncordon <node-name>`** | Allow scheduling new pods onto the node after maintenance |
+| **`kubectl delete node <node-name>`** | Remove node object from the cluster (after shutdown or replace) |
+| **`kubectl describe node <node-name>`** | Detailed information about node status, conditions |
+| **`kubectl get nodes -o wide`** | View all nodes and IPs for maintenance planning |
+| **`kubectl rollout status daemonset/<daemonset-name> -n kube-system`** | Ensure critical DaemonSets (like CNI plugins) are running |
+
+
+## 📦 **Cluster Backup and Restore**
+| Command | Description |
+|---------|-------------|
+| **`etcdctl snapshot save <backup.db>`** | Save etcd backup manually (from master node) |
+| **`etcdctl snapshot restore <backup.db>`** | Restore etcd snapshot (after disaster) |
+| **`kubectl get all --all-namespaces -o yaml > full-backup.yaml`** | Export full cluster state (basic method) |
+| **`kubectl apply -f full-backup.yaml`** | Re-apply full cluster backup (basic restore) |
+
+
+## 🚀 **Cluster Upgrade**
+| Command | Description |
+|---------|-------------|
+| **`kubeadm upgrade plan`** | Show available Kubernetes upgrade versions |
+| **`kubeadm upgrade apply vX.Y.Z`** | Upgrade master/control plane to specific version |
+| **`kubectl drain <node-name> --ignore-daemonsets`** | Prepare a worker node for upgrade |
+| **`apt-get upgrade kubelet kubectl kubeadm`** | Update packages (Debian/Ubuntu) |
+| **`systemctl daemon-reexec && systemctl restart kubelet`** | Restart services after upgrade |
+| **`kubectl uncordon <node-name>`** | Bring worker node back after upgrade |
+
+
+## 🧹 **Operating System Maintenance (Node OS Upgrade)**
+| Command | Description |
+|---------|-------------|
+| **`kubectl cordon <node-name>`** | Prepare node for OS upgrade |
+| **`kubectl drain <node-name> --ignore-daemonsets`** | Evict pods safely |
+| **`apt-get update && apt-get upgrade`** | OS upgrade commands (Debian/Ubuntu) |
+| **`reboot`** | Reboot the node after OS patches |
+| **`kubectl uncordon <node-name>`** | Re-enable the node after successful reboot |
+
+
+## 🛡️ **Pro-Tips for Safe Maintenance**
+| Tip | Description |
+|-----|-------------|
+| **Use PodDisruptionBudgets (PDBs)** | Protect critical applications during drain |
+| **Backup etcd regularly** | Always backup before upgrade |
+| **Upgrade master first** | Upgrade control plane first, then workers |
+| **Validate after upgrade** | Check `kubectl get nodes` and pod statuses carefully |
+
+
+
 # 📌 Popular Abbreviations in Kubernetes
 
 | Full Name                   |Abbreviation|
