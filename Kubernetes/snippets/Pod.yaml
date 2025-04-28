@@ -1,0 +1,373 @@
+#############################################
+## Simple Pod with Nginx
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+
+#############################################
+## Pod with 2 containers (sidecar pattern)
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-container-pod
+  labels:
+    app: multi-container
+spec:
+  containers:
+    - name: app-container
+      image: busybox
+      command: ["sh", "-c", "echo 'Hello from App' && sleep 3600"]
+    - name: sidecar-container
+      image: busybox
+      command: ["sh", "-c", "echo 'Hello from Sidecar' && sleep 3600"]
+
+#############################################
+## Pod with environment variables
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: env-pod
+  labels:
+    app: env-app
+spec:
+  containers:
+    - name: env-container
+      image: busybox
+      command: ["sh", "-c", "env && sleep 3600"]
+      env:
+        - name: MY_VAR
+          value: "Hello, Kubernetes!"
+
+
+#############################################
+## Pod with tolerations
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: bee
+  name: bee
+spec:
+  containers:
+  - image: nginx
+    name: bee
+  tolerations:
+  - key: "spray"
+    operator: "Equal"
+    value: "mortein"
+    effect: "NoSchedule"
+
+#### ⚙️ **Operators** and Their Effects
+#
+#### 1. **`Equal`**  
+#   - The **toleration** will match only if the taint's **key** and **value** are exactly equal.
+#   - Commonly used to match specific taints to tolerate.
+#
+#### 2. **`Exists`**  
+#   - The toleration will match if the **key** exists in the taint, **regardless of the value**.
+#   - This is useful when you don't care about the specific value of the taint, just the key.
+#
+##### 3. **`NotEqual`**  
+#   - The toleration will match if the **key** exists and the **value** is **not equal** to the taint's value.
+#   - Useful when you want to avoid a specific taint value but still allow for other values of the same key.
+
+
+#### 🌟 **Effect**:
+#
+#The effect field determines the behavior when a Pod does or does not tolerate a taint:
+#
+#- **`NoSchedule`**:  
+#  The Pod **will not** be scheduled onto the node unless the taint is tolerated by the Pod. If the taint matches the toleration, the Pod will be scheduled.
+#
+#- **`PreferNoSchedule`**:  
+#  Kubernetes will try to avoid scheduling the Pod on the node, but **it's not enforced**. The scheduler will try to place the Pod elsewhere if possible.
+#
+#- **`NoExecute`**:  
+#  If the taint matches, Pods that are already running on the node and do **not** tolerate the taint will be **evicted**. New Pods won't be scheduled onto the node unless they tolerate the taint.
+
+
+#############################################
+## Pod with node selector
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-with-nodeselector
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+  nodeSelector:
+    disktype: ssd
+
+
+#############################################
+## Pod with multiple containers
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-container-pod
+spec:
+  containers:
+    - name: container-1
+      image: nginx:latest
+      volumeMounts:
+        - name: shared-volume
+          mountPath: /usr/share/nginx/html
+    - name: container-2
+      image: busybox:latest
+      command: [ "sh", "-c", "while true; do echo 'Hello from container-2' >> /mnt/data/message.txt; sleep 5; done" ]
+      volumeMounts:
+        - name: shared-volume
+          mountPath: /mnt/data
+  volumes:
+    - name: shared-volume
+      emptyDir: {}
+
+
+#############################################
+## Pod with init container
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: myapp-container
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+  initContainers:
+  - name: init-myservice
+    image: busybox
+    command: ['sh', '-c', 'git clone <some-repository-that-will-be-used-by-application> ; done;']
+
+
+#############################################
+## Pod with override command, completely replacing the image’s default ENTRYPOINT
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: override-command-pod
+spec:
+  containers:
+  - name: alpine
+    image: alpine:latest
+    command: ["sleep", "5000"]
+    # command:
+    # - "sleep"
+    # - "1200"
+
+#############################################
+## Pod with override args, this keeps the image's ENTRYPOINT (like /bin/sh), but changes the CMD arguments
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-override-args-pod
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu:latest
+    args: ["-c", "echo Hello from args && sleep 3600"]
+
+
+#############################################
+## Pod using configMap file
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app-pod
+spec:
+  containers:
+    - name: web-app-container
+      image: busybox
+      command: ["sh", "-c", "env; sleep 3600"]
+      envFrom:
+        - configMapRef:
+            name: web-config
+
+#############################################
+## Pod using on a single env variable from a configMap
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app-pod
+spec:
+  containers:
+    - name: web-app-container
+      image: busybox
+      command: ["sh", "-c", "echo $SITE_MODE && sleep 3600"]
+      env:
+        - name: SITE_MODE
+          valueFrom:
+            configMapKeyRef:
+              name: web-config
+              key: SITE_MODE
+
+
+#############################################
+## Pod using manual env entries
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-web-app-pod
+spec:
+  containers:
+    - name: my-web-app-container
+      image: busybox
+      command: ["sh", "-c", "echo $SITE_MODE && echo $SERVER_PORT && sleep 3600"]
+      env:
+        - name: SITE_MODE
+          value: "production"
+        - name: SERVER_PORT
+          value: "8080"
+
+#############################################
+## Pod with attached SECRET file
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-envfrom-example
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    envFrom:
+    - secretRef:
+        name: my-secret
+
+#############################################
+## Pod with injected SINGLE SECRET ENV value
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-single-env
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    env:
+    - name: API_KEY  # this name can be changed for current needs (use as)
+      valueFrom:
+        secretKeyRef:
+          name: my-secret
+          key: API_KEY  # this is the actual env key name in secret file
+
+
+
+#############################################
+## Pod with node affinity (required)
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-with-node-affinity
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:   # if label not available, pod will not be scheduled
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: disktype
+            operator: In
+            values:
+            - ssd
+
+
+#############################################
+## Pod with node affinity (preferred)
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-preferred-node-affinity
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:  # if no label, use whatever node is available
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: disktype
+            operator: In
+            values:
+            - ssd
+            - nvme
+
+
+#############################################
+## Pod with resources request
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resource-demo
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"  # 0.25 (250m - milli) cpu core (thread)
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+
+### 📊 Memory Units in Kubernetes (Decimal vs Binary)
+#
+#| Value  | Type     | YAML Format | Bytes            | Approx. in MB  | Unit Name     |
+#|--------|----------|-------------|------------------|----------------|---------------|
+#| 512M   | Decimal  | `512M`      | 512,000,000      | 512.0 MB       | Megabytes     |
+#| 512Mi  | Binary   | `512Mi`     | 536,870,912      | 536.9 MB       | Mebibytes     |
+#| 1G     | Decimal  | `1G`        | 1,000,000,000    | 1000 MB        | Gigabytes     |
+#| 1Gi    | Binary   | `1Gi`       | 1,073,741,824    | 1073.7 MB      | Gibibytes     |
+#
+#✅ **Tip**:  
+#- Use **binary units** (`Mi`, `Gi`, etc. — *Mebibytes*, *Gibibytes*) in Kubernetes for better accuracy and alignment with how memory is handled in Linux systems.
+
+### ⚖️ Kubernetes Resource Requests vs Limits
+#
+#| Aspect             | `resources.requests`                          | `resources.limits`                            |
+#|--------------------|-----------------------------------------------|------------------------------------------------|
+#| ✅ **Purpose**     | Minimum amount of resource guaranteed         | Maximum amount the Pod **can** use             |
+#| 📦 **When applied**| During **scheduling** of the Pod              | During **runtime**                             |
+#| 💡 **Scheduler**   | Uses this to decide **where** to place Pod    | **Not** used for scheduling                    |
+#| 💻 **CPU Behavior**| Guaranteed to get at least this much CPU      | Throttled if it tries to use more than this    |
+#| 🧠 **Memory Behavior** | Can use more until limit is reached       | Killed if it exceeds this limit (OOMKill)      |
+#| ⚙️ **Example**     | `cpu: 100m`, `memory: 128Mi`                  | `cpu: 500m`, `memory: 256Mi`                   |
+#| 💬 **Analogy**     | "I need at least this much to run"            | "I promise not to use more than this"          |
+#|--------------------|-----------------------------------------------|------------------------------------------------|
+# 💡💡💡 POD WITH **REQUESTS** AND NO **LIMITS** IS THE MOST IDEAL CASE 💡💡💡                                           |
+# 💡💡 NEVER USE POD WITHOUT **REQUESTS** IF NO **LIMITS** SET. SOME PODS MAY CONSUME ALL RESOUCES AND OTHER PODS WILL NOT START 💡💡 |
+# 💡 IF NO **REQUSTS** SET BUT ONLY **LIMITS** IT WILL BE CONSIDERED THE SAME AS **LIMITS** 💡                          |
+#|--------------------|-----------------------------------------------|------------------------------------------------|
