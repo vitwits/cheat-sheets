@@ -39,6 +39,7 @@
 | **`kubectl create -f replicaset-definition.yaml`** | Create a new replica set |
 | **`kubectl replace -f replicaset-definition.yaml`** | Apply new replica set definition |
 | **`kubectl scale --replicas=6 -f replicaset-definition.yaml`** | Apply new replica set definition |
+| **`kubectl scale deployment my-app --replicas=3`** | Scale existing deployment |
 | **`kubectl get replicaset`** | Show replica sets |
 | **`kubectl create deploy web --image=wordpress --replicas=10 --dry-run=client -o yaml > deployment.yaml`** | Create a deployment YAML for `wordpress` |
 | **`kubectl get deploy -o wide`** | List deployments with additional details |
@@ -133,6 +134,18 @@
 | **`kubectl delete configmap my-config`** | Delete a specific ConfigMap |
 | **`kubectl apply -f configmap.yaml`** | Create or update ConfigMap from a YAML manifest |
 | **`kubectl get configmap my-config -o yaml`** | Get full YAML output of a ConfigMap |
+
+## ⚙️ **Autoscale Commands**
+| Command | Description |
+|---------|-------------|
+| **`kubectl autoscale deployment my-deployment --cpu-percent=50 --min=1 --max=10`** | Create an autoscaler for a Deployment based on CPU usage |
+| **`kubectl get hpa`** | List all Horizontal Pod Autoscalers (HPAs) in the current namespace |
+| **`kubectl describe hpa my-deployment`** | Show detailed information about a specific HPA |
+| **`kubectl delete hpa my-deployment`** | Delete a specific HPA |
+| **`kubectl apply -f hpa.yaml`** | Create or update an HPA from a YAML manifest |
+| **`kubectl get hpa my-deployment -o yaml`** | Get full YAML output of an HPA |
+| **`kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://nginx; done"`** | Create load on nginx service for load testing |
+| **`kubectl get hpa -w`** | Watch real time hpa stage (--watch) |
 
 
 ## 🔐 **Secrets**
