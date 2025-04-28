@@ -1,5 +1,17 @@
 # 🐳 Kubectl Cheatsheet
 
+## 🎯 **Help and Documentation**
+| Command | Description |
+|---------|-------------|
+| **`kubectl explain pod.spec`** | Shows detailed information about the spec field in a Pod |
+| **`kubectl explain deployment.spec.replicas`** | Shows information about the replicas field within a Deployment's spec |
+| **`kubectl describe -h`** | Displays help for kubectl describe |
+| **`kubectl exec -h`** | Displays help for kubectl exec to understand options for running commands in a pod |
+| **`kubectl explain pod`** | Explain the usage of pod or other resource ⬇️ |
+<!-- Pod, Deployment, ReplicaSet, StatefulSet, DaemonSet, Job, CronJob, Service, Ingress, NetworkPolicy, PersistentVolume, PersistentVolumeClaim, StorageClass, ConfigMap, Secret, ServiceAccount, Role, RoleBinding, ClusterRole, ClusterRoleBinding, Node, Namespace, Event, LimitRange, ResourceQuota, CustomResourceDefinition (CRD), HorizontalPodAutoscaler, VerticalPodAutoscaler
+ -->
+
+
 ## 🎯 **Context & Configuration**
 | Command | Description |
 |---------|-------------|
@@ -8,6 +20,7 @@
 | **`kubectl config get-contexts`** | List available contexts |
 | **`kubectl config current-context`** | Display the current context |
 | **`kubectl config set-context --current --namespace=<namespace>`** | Set the default namespace |
+
 
 ## 🚀 **Pod Management**
 | Command | Description |
@@ -32,6 +45,7 @@
 | **`kubectl apply -f nginx.yaml`** | Create or update a resource from `nginx.yaml` |
 | **`kubectl replace --force -f webapp-pod.yaml`** | Delete existing and create a new pod |
 
+
 ## 📦 **Deployment & Scaling**
 | Command | Description |
 |---------|-------------|
@@ -52,6 +66,7 @@
 | **`kubectl describe replicaset wordpress-group-75cfdc8d8d`** | Describe a specific ReplicaSet |
 | **`kubectl set image deployment/my_deployment webapp=nginx:1.9.1`** | Set a new image for an existing deployment |
 
+
 ## 🚀 **Rollout**
 | Command | Description |
 |---------|-------------|
@@ -70,6 +85,7 @@
 | **`kubectl label nodes node-1 size=Large`** | Assign a label to a node |
 | **`kubectl get nodes node01 --show-labels`** | Show assigned labels to a node |
 
+
 ## 🧑‍🔧 **Namespaces**
 | Command | Description |
 |---------|-------------|
@@ -84,6 +100,7 @@
 | **`kubectl config set-context --current --namespace=mealie`** | Set the default namespace to `mealie` |
 | **`kubectl config set-context $(kubectl config current-context) --namespace=mealie`** | Set the default namespace to `mealie` |
 
+
 ## 🌐 **Networking**
 | Command | Description |
 |---------|-------------|
@@ -91,6 +108,7 @@
 | **`kubectl expose deployment frontend --port 8080`** | Expose the `frontend` deployment on port 8080 |
 | **`kubectl port-forward pod/<pod-name> 8080:80`** | Forward local port 8080 to port 80 on the pod |
 | **`kubectl port-forward services/mealie 9000`** | Port-forward `mealie` service to local port 9000 |
+
 
 ## 🛠️ **Kubectl Miscellaneous**
 | Command | Description |
@@ -104,6 +122,7 @@
 | **`kubectl get all -n mealie`** | List all resources in the specific namespace |
 | **`kubectl get --raw='/readyz?verbose'`** | Verify all the cluster component health statuses |
 | **`kubectl cluster-info`** | Get cluster info |
+
 
 ## 🔍 **Debugging & Troubleshooting**
 | Command | Description |
@@ -134,6 +153,7 @@
 | **`kubectl delete configmap my-config`** | Delete a specific ConfigMap |
 | **`kubectl apply -f configmap.yaml`** | Create or update ConfigMap from a YAML manifest |
 | **`kubectl get configmap my-config -o yaml`** | Get full YAML output of a ConfigMap |
+
 
 ## ⚙️ **Autoscale Commands**
 | Command | Description |
@@ -168,6 +188,7 @@
 |---------|-------------|
 | **`kubectl get persistentvolumes`** | Show detailed information about a persistent volumes `PV` |
 | **`kubectl get persistentvolumeclaims`** | Show information about persistent volume claims `PVC` |
+
 
 ## 📊 **Metrics Server Commands**
 | Command | Description |
