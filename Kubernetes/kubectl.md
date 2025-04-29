@@ -234,16 +234,6 @@
 | **`kubectl uncordon <node-name>`** | Bring worker node back after upgrade |
 
 
-## 🧹 **Operating System Maintenance (Node OS Upgrade)**
-| Command | Description |
-|---------|-------------|
-| **`kubectl cordon <node-name>`** | Prepare node for OS upgrade |
-| **`kubectl drain <node-name> --ignore-daemonsets`** | Evict pods safely |
-| **`apt-get update && apt-get upgrade`** | OS upgrade commands (Debian/Ubuntu) |
-| **`reboot`** | Reboot the node after OS patches |
-| **`kubectl uncordon <node-name>`** | Re-enable the node after successful reboot |
-
-
 ## 🛡️ **Pro-Tips for Safe Maintenance**
 | Tip | Description |
 |-----|-------------|
