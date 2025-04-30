@@ -206,7 +206,7 @@
 | Command | Description |
 |---------|-------------|
 | **`kubectl cordon <node-name>`** | Mark a node as unschedulable (prevent new pods) |
-| **`kubectl drain <node-name> --ignore-daemonsets --delete-emptydir-data`** | Safely evict pods from a node for maintenance |
+| **`kubectl drain <node-name> --ignore-daemonsets --delete-emptydir-data`** | Safely evict pods from a node for maintenance and apply cordon command also |
 | **`kubectl uncordon <node-name>`** | Allow scheduling new pods onto the node after maintenance |
 | **`kubectl delete node <node-name>`** | Remove node object from the cluster (after shutdown or replace) |
 | **`kubectl describe node <node-name>`** | Detailed information about node status, conditions |
@@ -217,8 +217,10 @@
 ## 📦 **Cluster Backup and Restore**
 | Command | Description |
 |---------|-------------|
-| **`etcdctl snapshot save <backup.db>`** | Save etcd backup manually (from master node) |
-| **`etcdctl snapshot restore <backup.db>`** | Restore etcd snapshot (after disaster) |
+| **`ETCDCTL_API=3 etcdctl snapshot save /root/etcd-snapshot.db --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key`** | Save etcd backup manually (from master node) |
+| **`etcdctl --write-out=table snapshot status snapshot.db`** | Check backup status (Deprecated) |
+| **`etcdutl --write-out=table snapshot status snapshot.db`** | Check backup status |
+| **`etcdctl snapshot restore snapshot.db`** | Restore etcd snapshot (after disaster) |
 | **`kubectl get all --all-namespaces -o yaml > full-backup.yaml`** | Export full cluster state (basic method) |
 | **`kubectl apply -f full-backup.yaml`** | Re-apply full cluster backup (basic restore) |
 
