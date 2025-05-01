@@ -12,10 +12,12 @@
  -->
 
 
-## 🎯 **Context & Configuration**
+## 🎯 **Context, Clusters & Configuration**
 | Command | Description |
 |---------|-------------|
 | **`kubectl config view`** | Show the kubeconfig settings |
+| **`kubectl cluster-info`** | Get cluster info |
+| **`kubectl config get-clusters`** | Show available clusters |
 | **`kubectl config use-context <name>`** | Switch to a different context |
 | **`kubectl config get-contexts`** | List available contexts |
 | **`kubectl config current-context`** | Display the current context |
@@ -121,7 +123,6 @@
 | **`kubectl get all`** | List all resources in the current namespace |
 | **`kubectl get all -n mealie`** | List all resources in the specific namespace |
 | **`kubectl get --raw='/readyz?verbose'`** | Verify all the cluster component health statuses |
-| **`kubectl cluster-info`** | Get cluster info |
 
 
 ## 🔍 **Debugging & Troubleshooting**
@@ -220,7 +221,8 @@
 | **`ETCDCTL_API=3 etcdctl snapshot save /root/etcd-snapshot.db --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key`** | Save etcd backup manually (from master node) |
 | **`etcdctl --write-out=table snapshot status snapshot.db`** | Check backup status (Deprecated) |
 | **`etcdutl --write-out=table snapshot status snapshot.db`** | Check backup status |
-| **`etcdctl snapshot restore snapshot.db`** | Restore etcd snapshot (after disaster) |
+| **`ETCDCTL_API=3 etcdctl --data-dir <data-dir-location> snapshot restore snapshot.db`** | Restore etcd snapshot (after disaster) (Deprecated) |
+| **`etcdutl --data-dir <data-dir-location> snapshot restore snapshot.db`** | Restore etcd snapshot (after disaster) |
 | **`kubectl get all --all-namespaces -o yaml > full-backup.yaml`** | Export full cluster state (basic method) |
 | **`kubectl apply -f full-backup.yaml`** | Re-apply full cluster backup (basic restore) |
 
