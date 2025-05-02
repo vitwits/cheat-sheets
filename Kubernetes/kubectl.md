@@ -22,6 +22,7 @@
 | **`kubectl config get-contexts`** | List available contexts |
 | **`kubectl config current-context`** | Display the current context |
 | **`kubectl config set-context --current --namespace=<namespace>`** | Set the default namespace |
+| **`kubectl api-resources`** | Get all API groups and API resources |
 
 
 ## 🚀 **Pod Management**
@@ -214,6 +215,35 @@
 | **`kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml`** | Install Metrics Server from the official release |
 | **`kubectl get deployment metrics-server -n kube-system`** | Check if the Metrics Server is deployed |
 | **`kubectl logs -n kube-system deployment/metrics-server`** | View logs for troubleshooting |
+
+
+## 🔐 **RBAC and Roles**
+| Command | Description |
+|---------|-------------|
+| **`kubectl create role <name> --verb=<verbs> --resource=<resources> --namespace=<ns>`** | Create a Role in a specific namespace |
+| **`kubectl create clusterrole <name> --verb=<verbs> --resource=<resources>`** | Create a ClusterRole for cluster-wide permissions |
+| **`kubectl create rolebinding <name> --role=<role-name> --user=<user> --namespace=<ns>`** | Bind a Role to a user within a namespace |
+| **`kubectl create clusterrolebinding <name> --clusterrole=<role-name> --user=<user>`** | Bind a ClusterRole to a user cluster-wide |
+| **`kubectl get role,rolebinding -n <namespace>`** | List all Roles and RoleBindings in a namespace |
+| **`kubectl get clusterrole,clusterrolebinding`** | List all ClusterRoles and ClusterRoleBindings |
+| **`kubectl describe role <name> -n <namespace>`** | Show detailed info about a specific Role |
+| **`kubectl describe rolebinding <name> -n <namespace>`** | Show detailed info about a specific RoleBinding |
+| **`kubectl describe clusterrole <name>`** | Show detailed info about a specific ClusterRole |
+| **`kubectl delete role <name> -n <namespace>`** | Delete a Role from a namespace |
+| **`kubectl delete clusterrole <name>`** | Delete a ClusterRole |
+| **`kubectl auth can-i list pods -n default`** | Check if your current user can list pods in the 'default' namespace |
+| **`kubectl auth can-i create deployments -n kube-system`** | Check if your current user can create deployments in the 'kube-system' namespace |
+| **`kubectl auth can-i get nodes`** | Check if your current user can get nodes cluster-wide |
+| **`kubectl auth can-i delete configmaps/my-config`** | Check if your current user can delete a specific configmap named 'my-config' in the current namespace |
+| **`kubectl auth can-i --list`** | List all the actions your current user can perform in the current namespace |
+| **`kubectl auth can-i --list --all-namespaces=true`** | List all the actions your current user can perform cluster-wide |
+| **`kubectl auth can-i get pods --as=developer-alice -n development`** | Check if the user 'developer-alice' can get pods in the 'development' namespace |
+| **`kubectl auth can-i create namespaces --as=ops-bob`** | Check if the user 'ops-bob' can create namespaces |
+| **`kubectl auth can-i list deployments --as-group=frontend-developers -n staging`** | Check if the group 'frontend-developers' can list deployments in the 'staging' namespace |
+| **`kubectl auth can-i get secrets --as=system:serviceaccount:production:my-app-sa -n production`** | Check if the service account 'my-app-sa' in the 'production' namespace can get secrets in its own namespace |
+| **`kubectl auth can-i get events --as=auditor`** | Check if the user 'auditor' can get events cluster-wide |
+| **`kubectl auth can-i create networkpolicies --as=restricted-user -n default`** | Check if the user 'restricted-user' can create networkpolicies in the 'default' namespace |
+
 
 
 ## 🛠️ **Cluster and Node Maintenance Commands**
