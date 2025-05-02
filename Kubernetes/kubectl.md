@@ -112,6 +112,18 @@
 | **`kubectl port-forward services/mealie 9000`** | Port-forward `mealie` service to local port 9000 |
 
 
+## 🔐 **Certificate Management**
+| Command | Description |
+|---------|-------------|
+| **`kubectl get csr`** | List all CertificateSigningRequests (CSR) |
+| **`kubectl describe csr <csr-name>`** | Show details of a specific CSR  |
+| **`kubectl get csr agent-smith -o yaml`** | Show details of a specific CSR in yaml  |
+| **`kubectl certificate approve <csr-name>`** | Approve a certificate signing request |
+| **`kubectl certificate deny <csr-name>`**  | Deny a certificate signing request |
+| **`kubectl delete csr <csr-name>`** | Delete a certificate signing request |
+| **`kubectl apply -f csr.yaml`**  | Submit a new CSR from a YAML file |
+
+
 ## 🛠️ **Kubectl Miscellaneous**
 | Command | Description |
 |---------|-------------|

@@ -320,6 +320,7 @@ This document contains all the commands used in the TCM Academy course "Linux 10
     find / -name 'sample.txt' > all.txt 2>&1
     find / -name 'sample.txt' > location.txt 2> /dev/null
     cat location.txt
+    cat file.txt | base64 -w 0         <!-- encode text in file to base64 format and output it in a single line (wrap 0) -->
 
 ### Pipes
     ls -l /etc/ | less
