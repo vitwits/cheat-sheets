@@ -1,8 +1,9 @@
+![alt text](api_groups.jpg)
 # Kubernetes API Endpoints (v1.26.0)
 
 ## Discovery Endpoints
-- `/api`   <!-- available endpoints -->
-- `/apis`  <!-- available endpoints -->
+- `/api`   <!-- available endpoints CORE GROUP-->
+- `/apis`  <!-- available endpoints NAMED GROUP-->
 - `/healthz`
 - `/version`
 - `/metrics`
@@ -13,6 +14,34 @@
      --key /etc/kubernetes/pki/apiserver-kubelet-client.key \
      https://SERVER-IP:6443/api/v1/pods
 ` -->
+
+### RETURN AVAILABLE ENDPOINTS (Using certificates)
+<!-- - `curl --cacert /etc/kubernetes/pki/ca.crt \
+     --cert /etc/kubernetes/pki/apiserver-kubelet-client.crt \
+     --key /etc/kubernetes/pki/apiserver-kubelet-client.key \
+     https://SERVER-IP:6443 -k
+` --> 
+
+### RETURN AVAILABLE ENDPOINTS (with kubectl proxy enabled ($ kubectl proxy))
+<!-- curl http://localhost:8001 -k --> 
+
+
+## Kubernetes API Groups Explained (Short)
+
+Kubernetes API groups are like **folders** for different types of resources. They help organize the vast number of objects in Kubernetes by their functionality (e.g., `apps` for deployments, `networking.k8s.io` for network stuff).
+
+**Key points:**
+
+* **Organization:** Keeps related resources together.
+* **Extensibility:** Allows adding new APIs (including custom ones via CRDs) without affecting core APIs.
+* **Versioning:** Each group can have its own versioning scheme, allowing independent evolution.
+
+**Types:**
+
+* **Core Group (`/api/v1`):** Contains fundamental resources (pods, namespaces, etc.). No explicit group name in `apiVersion`.
+* **Named Groups (`/apis/<group_name>/<version>`):** Group resources by function (e.g., `apps/v1`, `networking.k8s.io/v1`). The group name is part of the `apiVersion`.
+
+Think of them as logical modules that make Kubernetes more manageable and scalable.
 
 
 ## Core API Group (`/api/v1`)
