@@ -104,6 +104,22 @@
 | **`kubectl config set-context $(kubectl config current-context) --namespace=mealie`** | Set the default namespace to `mealie` |
 
 
+## 👤 **ServiceAccounts**
+| Command | Description |
+|---------|-------------|
+| **`kubectl create serviceaccount <name>`** | Create a ServiceAccount in the current namespace |
+| **`kubectl create serviceaccount <name> -n <namespace>`** | Create a ServiceAccount in the specified namespace |
+| **`kubectl get serviceaccounts`** | List all ServiceAccounts in the current namespace |
+| **`kubectl get serviceaccounts -n <namespace>`** | List all ServiceAccounts in the specified namespace |
+| **`kubectl describe serviceaccount <name>`** | Show details of a ServiceAccount in the current namespace |
+| **`kubectl describe serviceaccount <name> -n <namespace>`** | Show details of a ServiceAccount in the specified namespace |
+| **`kubectl delete serviceaccount <name>`** | Delete a ServiceAccount from the current namespace |
+| **`kubectl delete serviceaccount <name> -n <namespace>`** | Delete a ServiceAccount from the specified namespace |
+| **`kubectl create token <name> -n <namespace>`** | Generate a token for a ServiceAccount (Kubernetes v1.24+) |
+| **`kubectl get secret -n <namespace>`** | List all secrets (used to store SA tokens before v1.24) |
+| **`kubectl describe secret <secret-name> -n <namespace>`** | Show details of a secret containing a token (pre v1.24) |
+
+
 ## 🌐 **Networking**
 | Command | Description |
 |---------|-------------|
@@ -196,6 +212,7 @@
 | **`kubectl apply -f secret.yaml`** | Create or update a secret from a YAML file |
 | **`kubectl delete secret <name>`** | Delete a specific secret |
 | **`kubectl edit secret <name>`** | Edit the secret using the default editor |
+| **`kubectl create secret docker-registry my-docker-secret --docker-server=docker.io --docker-username=myusername --docker-password=mysecretpassword --docker-email=myemail@example.com`** | Creating Docker registry secret |
 
 
 ## 💾 **Volumes and Storage**
@@ -221,11 +238,12 @@
 | Command | Description |
 |---------|-------------|
 | **`kubectl create role <name> --verb=<verbs> --resource=<resources> --namespace=<ns>`** | Create a Role in a specific namespace |
-| **`kubectl create clusterrole <name> --verb=<verbs> --resource=<resources>`** | Create a ClusterRole for cluster-wide permissions |
+| **`kubectl create clusterrole storage-admin --resource=persistentvolumes,storageclasses --verb=list,create,get,watch`** | Create a ClusterRole for cluster-wide permissions |
 | **`kubectl create rolebinding <name> --role=<role-name> --user=<user> --namespace=<ns>`** | Bind a Role to a user within a namespace |
-| **`kubectl create clusterrolebinding <name> --clusterrole=<role-name> --user=<user>`** | Bind a ClusterRole to a user cluster-wide |
+| **`kubectl create clusterrolebinding michelle-storage-admin --user=michelle --cluster=storage-admin`** | Bind a ClusterRole to a user cluster-wide |
 | **`kubectl get role,rolebinding -n <namespace>`** | List all Roles and RoleBindings in a namespace |
 | **`kubectl get clusterrole,clusterrolebinding`** | List all ClusterRoles and ClusterRoleBindings |
+| **`kubectl get clusterrole storage-admin -o yaml`** | Get full yuml output for a clusterrole |
 | **`kubectl describe role <name> -n <namespace>`** | Show detailed info about a specific Role |
 | **`kubectl describe rolebinding <name> -n <namespace>`** | Show detailed info about a specific RoleBinding |
 | **`kubectl describe clusterrole <name>`** | Show detailed info about a specific ClusterRole |

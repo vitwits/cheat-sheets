@@ -277,6 +277,22 @@ spec:
           key: API_KEY  # this is the actual env key name in secret file
 
 
+#############################################
+## Pod with Docker registry secret
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: docker.io/myusername/myimage:latest
+  imagePullSecrets:
+  - name: my-docker-secret
+
+
+
 
 #############################################
 ## Pod with node affinity (required)
