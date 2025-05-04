@@ -292,6 +292,33 @@ spec:
   - name: my-docker-secret
 
 
+#############################################
+## Pod with security context added (pod level and container level)
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-secure-pod
+spec:
+  securityContext:
+    runAsUser: 1000         # Specifies the user ID to run the pod as
+    runAsGroup: 1000        # Specifies the group ID to run the pod as
+    fsGroup: 2000           # Specifies the group ID for filesystems mounted inside the pod
+    seLinuxOptions:
+      level: "s0:c123,c456" # SELinux options for the pod
+  containers:
+  - name: my-container
+    image: myimage:latest
+    securityContext:
+      allowPrivilegeEscalation: false  # Prevents privilege escalation for the container
+      runAsUser: 1000                  # Specifies the user ID for this container
+      runAsGroup: 1000                 # Specifies the group ID for this container
+      capabilities:
+        add: ["NET_ADMIN", "SYS_TIME"]  # Add specific capabilities
+        drop: ["ALL"]                  # Drop all other capabilities
+    ports:
+    - containerPort: 8080
+
 
 
 #############################################

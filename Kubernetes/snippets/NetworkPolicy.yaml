@@ -1,0 +1,127 @@
+#############################################
+## Network Ingress Policy
+#############################################
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-from-multiple-sources
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      role: backend  # This policy applies to pods with label 'role=backend'
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    # 1. Allow from pods with label role=frontend in the same namespace
+    - podSelector:
+        matchLabels:
+          role: frontend
+
+    # 2. Allow from any pod in a namespace labeled team=dev
+    - namespaceSelector:
+        matchLabels:
+          team: dev
+
+    # 3. Allow from a specific IP address (e.g., a corporate VPN)
+    - ipBlock:
+        cidr: 192.168.10.5/32
+
+    # 4. Allow from a whole IP range, excluding one specific IP
+    - ipBlock:
+        cidr: 192.168.10.0/24
+        except:
+          - 192.168.10.100/32
+
+    # 5. COMBINED CONDITION:
+    # Allow traffic only from pods with label role=frontend
+    # that are in namespaces labeled team=dev
+    - namespaceSelector:
+        matchLabels:
+          team: dev
+      podSelector:
+        matchLabels:
+          role: frontend
+
+  ports:
+  - protocol: TCP
+    port: 80
+
+
+#############################################
+## Network Egress Policy
+#############################################
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-egress-to-api
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      role: frontend
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 203.0.113.10/32
+    ports:
+    - protocol: TCP
+      port: 443
+
+
+#############################################
+## Network Ingress and Egress Policy combined
+#############################################
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: restrict-ingress-egress
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: myapp  # Applies to all pods with label 'app=myapp' in the 'default' namespace
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    # Allow from pods with role=frontend in same namespace
+    - podSelector:
+        matchLabels:
+          role: frontend
+
+    # Allow from dev namespaces with role=frontend
+    - namespaceSelector:
+        matchLabels:
+          team: dev
+      podSelector:
+        matchLabels:
+          role: frontend
+
+    ports:
+    - protocol: TCP
+      port: 443
+
+  egress:
+  - to:
+    # Allow access to database pods in same namespace
+    - podSelector:
+        matchLabels:
+          role: database
+
+    ports:
+    - protocol: TCP
+      port: 5432
+
+  - to:
+    # Allow access to external API over the internet
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - protocol: TCP
+      port: 443
+
