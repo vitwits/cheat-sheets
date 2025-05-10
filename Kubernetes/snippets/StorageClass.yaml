@@ -1,0 +1,54 @@
+#############################################
+## Google Cloud Platform (GKE)
+#############################################
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: standard-gke
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-standard
+  fstype: ext4
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+
+# type: can be pd-standard or pd-ssd
+# volumeBindingMode: WaitForFirstConsumer delays provisioning until a Pod is scheduled
+
+
+#############################################
+## Amazon Web Services (EKS)
+#############################################
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: standard-aws
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+  fsType: ext4
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+
+# type: common values are gp2, gp3, io1, sc1
+# For CSI driver usage, replace provisioner with AWS EBS CSI provisioner (like ebs.csi.aws.com)
+
+
+
+#############################################
+## Microsoft Azure (AKS)
+#############################################
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: azure-disk
+provisioner: kubernetes.io/azure-disk
+parameters:
+  skuName: Standard_LRS
+  kind: Managed
+  storageaccounttype: Standard_LRS
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+
+# skuName: can be Standard_LRS, Premium_LRS, etc.
+# kind: usually Managed

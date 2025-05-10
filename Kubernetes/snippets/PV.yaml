@@ -1,0 +1,93 @@
+#############################################
+## Local HostPath (for development or single-node clusters)
+#############################################
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-local-hostpath
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /mnt/data
+
+# Storage backend: A local directory on the node (/mnt/data)
+# Reclaim policy: Retain (volume stays even if the claim is deleted)
+# ⚠️ Warning: Only works on one specific node — not suitable for production.
+
+
+#############################################
+## NFS (Network File System)
+#############################################
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /srv/nfs/kubedata
+    server: 192.168.1.100
+
+# Storage backend: NFS share
+# Access mode: ReadWriteMany (many Pods can write to it at once)
+# ✅ Good for shared access across multiple Pods.
+
+
+#############################################
+## AWS EBS (Elastic Block Store using CSI)
+#############################################
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-ebs
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: ""
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: vol-0123456789abcdef0
+    fsType: ext4
+
+# Storage backend: AWS EBS volume (vol-xxxx)
+# Provisioning: Pre-provisioned manually (not dynamic)
+# Access mode: One Pod at a time can write (ReadWriteOnce)
+# Reclaim policy: Delete (volume is automatically deleted when PVC is removed)
+
+
+
+#############################################
+## CephFS (distributed storage)
+#############################################
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-cephfs
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  cephfs:
+    monitors:
+      - 10.10.10.1:6789
+    path: /k8s
+    user: admin
+    secretRef:
+      name: ceph-secret
+
+# Storage backend: CephFS distributed filesystem
+# ✅ Good for advanced use-cases (shared file system, fault-tolerant)
+# 🔒 Requires secrets and proper configuration

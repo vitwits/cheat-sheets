@@ -216,10 +216,24 @@
 
 
 ## 💾 **Volumes and Storage**
+
 | Command | Description |
 |---------|-------------|
-| **`kubectl get persistentvolumes`** | Show detailed information about a persistent volumes `PV` |
-| **`kubectl get persistentvolumeclaims`** | Show information about persistent volume claims `PVC` |
+| **`kubectl get persistentvolumes`** | Show all PersistentVolumes (PVs) in the cluster |
+| **`kubectl get persistentvolumeclaims`** | Show all PersistentVolumeClaims (PVCs) in the current namespace |
+| **`kubectl describe pv <pv-name>`** | Show detailed information about a specific PersistentVolume |
+| **`kubectl describe pvc <pvc-name>`** | Show detailed information about a specific PersistentVolumeClaim |
+| **`kubectl get storageclass`** | List all available StorageClasses in the cluster |
+| **`kubectl describe storageclass <class-name>`** | Show configuration and parameters of a specific StorageClass |
+| **`kubectl apply -f <pv.yaml>`** | Create a PersistentVolume from a YAML file |
+| **`kubectl apply -f <pvc.yaml>`** | Create a PersistentVolumeClaim from a YAML file |
+| **`kubectl delete pv <pv-name>`** | Delete a specific PersistentVolume |
+| **`kubectl delete pvc <pvc-name>`** | Delete a specific PersistentVolumeClaim |
+| **`kubectl get pv -o wide`** | Show detailed PersistentVolumes info with additional columns |
+| **`kubectl get pvc -o wide`** | Show detailed PersistentVolumeClaims info with additional columns |
+| **`kubectl get pv -A`** | Show PersistentVolumes across all namespaces |
+| **`kubectl get pvc -A`** | Show PersistentVolumeClaims across all namespaces |
+
 
 
 ## 📊 **Metrics Server Commands**

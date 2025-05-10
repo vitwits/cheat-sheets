@@ -1,0 +1,88 @@
+#############################################
+## Basic PVC for Storage
+#############################################
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+# accessModes: ReadWriteOnce: Allows only one pod to read/write to the volume.
+# resources.requests.storage: 5Gi: Requests 5Gi of storage.
+
+
+#############################################
+## PVC with a Specific StorageClass
+#############################################
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: fast-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: fast-storage
+
+# storageClassName: fast-storage: Specifies the storage class (e.g., fast-storage).
+# accessModes: ReadWriteOnce: Allows only one pod to read/write to the volume.
+
+
+#############################################
+## PVC for Multi-Access (ReadWriteMany)
+#############################################
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: multi-access-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+
+# accessModes: ReadWriteMany: Allows multiple pods to read/write to the volume at the same time.
+
+
+#############################################
+## PVC for Read-Only Access (ReadOnlyMany)
+#############################################
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: read-only-pvc
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 5Gi
+
+# accessModes: ReadOnlyMany: Allows multiple pods to only read the volume (no writing).
+
+
+#############################################
+## PVC for Dynamic Volume Provisioning
+#############################################
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dynamic-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: dynamic-storage
+
+# storageClassName: dynamic-storage: Specifies that the volume should be provisioned dynamically using the dynamic-storage class.
+# accessModes: ReadWriteOnce: Allows only one pod to read/write to the volume.
