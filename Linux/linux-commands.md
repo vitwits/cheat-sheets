@@ -406,14 +406,10 @@ This document contains all the commands used in the TCM Academy course "Linux 10
     ip address
     ip -s link
     ip help
-    ip address help
     ip link help
-    ip address
     sudo ip link set dev enp0s3 down
-    ip address
     ping google.com
     sudo ip link set dev enp0s3 up
-    ip address
     ping google.com
     ip route
     route
@@ -425,21 +421,18 @@ This document contains all the commands used in the TCM Academy course "Linux 10
     dig google.om
     dig -x 8.8.8.8
     netstat -at
-    netstat -at
     netstat -lt
     Type in separate terminal: python3 -m http.server
-    netstat -lt
+    ss 
 
 ### File Transfer Utilities
     scp file.txt 192.168.100.4:/home/bob/
     Remote host: ls
     scp -r files 192.168.100.4:/home/bob/
-    Remote host: ls
     Remote host: ls files/
     scp 192.168.100.4:/home/bob/remote-file.txt backup/
     scp -r 192.168.100.4:/home/bob/remote-files backup/
     scp file.txt sally@<ip>:/home/sally/
-    rsync -avzh file2.txt 192.168.100.4:/home/bob/
     rsync -avzh file2.txt 192.168.100.4:/home/bob/
     man rsync
 
@@ -578,3 +571,9 @@ Links to regular expressions on Regexr:
     ./command-line-arguments-example.sh first second third fourth fifth 6 7 8 9 10 11 12 13
     https://xkcd.com/936/
     ./generate-password.sh 4 '-'
+
+## Various
+    $ hostnamectl
+    $ !h - will run 'hostnamectl' command (running last command by specifying first letters of last command)
+
+    !! sudo - run last command with 'sudo'
