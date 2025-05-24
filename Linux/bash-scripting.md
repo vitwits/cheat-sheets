@@ -1313,3 +1313,24 @@ main "$@" # Pass all script arguments to the main function
 ```
 
 -----
+
+- `()` — run commands in a subshell.  
+- `$(...)` — command substitution, returns command output.  
+- `(())` — arithmetic evaluation.  
+- `{}` — group commands without a subshell.  
+- `[]` — test condition (old test syntax).  
+- `[[ ]]` — test condition (extended test syntax).  
+- `[@]` — all elements of an array expansion.  
+- `${var}` — variable expansion.  
+- `${var:-default}` — variable value or default if unset/empty.  
+- `${#var}` — length of string or array.  
+- `${arr[index]}` — array element at index.  
+- `(( ))` — arithmetic expressions (like `let`).  
+- `((var++))` — increment variable.  
+- `[[ $a == $b ]]` — compare variables in condition.  
+- `<<<` — here-string (passes string as stdin).  
+- `<` — input redirection from file.  
+- `>` — output redirection (overwrite file).  
+- `>>` — output redirection (append to file). 
+
+-----

@@ -373,5 +373,5 @@ apt-get autoclean                        # Remove obsolete cached packages (olde
 ```bash
 !h                          # will run 'hostnamectl' command (running last command by specifying first letters of last command)
 !!                          # run last command
-!!                      # run last command with ''
+!!                          # run last command with
 ```
