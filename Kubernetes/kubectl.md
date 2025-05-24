@@ -150,6 +150,7 @@
 | **`kubectl explain <resource>`** | Show API documentation for a resource |
 | **`kubectl version --short`** | Display Kubernetes client and server version |
 | **`kubectl get all`** | List all resources in the current namespace |
+| **`kubectl get all -A`** | List all resources in all namespaces |
 | **`kubectl get all -n mealie`** | List all resources in the specific namespace |
 | **`kubectl get --raw='/readyz?verbose'`** | Verify all the cluster component health statuses |
 | **`kubectl proxy`** | Start kubectl proxy server for making api requests (curl) without specifying certificates `curl http://localhost:8001/api/v1/pods` |

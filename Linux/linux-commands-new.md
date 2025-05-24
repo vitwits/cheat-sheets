@@ -124,171 +124,171 @@ nmap --exclude 192.168.1.5              # Exclude target IP from scan
 nmap 192.168.1.0/24                     # Scan entire subnet  
 nmap --script "default or safe" 192.168.1.1  # Run default and safe scripts  
 
- iptables -L -v -n                  # List all IPv4 rules with packet counts, no DNS resolution  
- iptables -L --line-numbers         # Show rules with line numbers for reference or deletion  
- iptables -S                        # Show rules in iptables-save format (for scripting)  
- iptables -A INPUT -p tcp --dport 22 -j ACCEPT      # Allow incoming SSH connections  
- iptables -P INPUT DROP             # Set default policy to DROP for incoming traffic  
- iptables -A INPUT -i lo -j ACCEPT  # Accept all traffic from localhost interface  
- iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT  # Allow established and related connections  
- iptables -A INPUT -p icmp -j ACCEPT               # Allow ping (ICMP)  
- iptables -D INPUT 3                # Delete rule number 3 in INPUT chain  
- iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT    # Insert HTTP rule at top of INPUT chain  
- iptables -F                        # Flush (delete) all rules in all chains  
- iptables -X                        # Delete all user-defined chains 
- iptables -Z                        # Zero (reset) all packet and byte counters in all chains  
- iptables -N LOGGING                # Create new chain named LOGGING  
- iptables -A INPUT -j LOGGING       # Send packets to LOGGING chain  
- iptables -A LOGGING -m limit --limit 2/min -j LOG --log-prefix "IPTables-Dropped: " --log-level 4  # Log dropped packets  
+iptables -L -v -n                  # List all IPv4 rules with packet counts, no DNS resolution  
+iptables -L --line-numbers         # Show rules with line numbers for reference or deletion  
+iptables -S                        # Show rules in iptables-save format (for scripting)  
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT      # Allow incoming SSH connections  
+iptables -P INPUT DROP             # Set default policy to DROP for incoming traffic  
+iptables -A INPUT -i lo -j ACCEPT  # Accept all traffic from localhost interface  
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT  # Allow established and related connections  
+iptables -A INPUT -p icmp -j ACCEPT               # Allow ping (ICMP)  
+iptables -D INPUT 3                # Delete rule number 3 in INPUT chain  
+iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT    # Insert HTTP rule at top of INPUT chain  
+iptables -F                        # Flush (delete) all rules in all chains  
+iptables -X                        # Delete all user-defined chains 
+iptables -Z                        # Zero (reset) all packet and byte counters in all chains  
+iptables -N LOGGING                # Create new chain named LOGGING  
+iptables -A INPUT -j LOGGING       # Send packets to LOGGING chain  
+iptables -A LOGGING -m limit --limit 2/min -j LOG --log-prefix "IPTables-Dropped: " --log-level 4  # Log dropped packets  
 
- iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT  
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT  
 # Allow incoming packets that are part of already established or related connections, ensuring proper session tracking  
 
- iptables -A INPUT -i lo -j ACCEPT  
+iptables -A INPUT -i lo -j ACCEPT  
 # Allow all traffic on the loopback interface (localhost), necessary for internal system communications  
 
- iptables -A INPUT -p tcp --dport 22 -j ACCEPT  
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT  
 # Allow incoming SSH connections on TCP port 22 for remote administration  
 
- iptables -A INPUT -p tcp --dport 80 -j ACCEPT  
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT  
 # Allow incoming HTTP web traffic on TCP port 80  
 
- iptables -A INPUT -p tcp --dport 443 -j ACCEPT  
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT  
 # Allow incoming HTTPS secure web traffic on TCP port 443  
 
- iptables -A INPUT -p icmp -j ACCEPT  
+iptables -A INPUT -p icmp -j ACCEPT  
 # Allow all ICMP packets, enabling ping and network diagnostics  
 
- iptables -A INPUT -p udp --dport 53 -j ACCEPT  
+iptables -A INPUT -p udp --dport 53 -j ACCEPT  
 # Allow DNS queries on UDP port 53, necessary for domain name resolution  
 
- iptables -A INPUT -p udp --dport 123 -j ACCEPT  
+iptables -A INPUT -p udp --dport 123 -j ACCEPT  
 # Allow NTP time synchronization requests on UDP port 123  
 
- iptables -A INPUT -p tcp --dport 25 -j DROP  
+iptables -A INPUT -p tcp --dport 25 -j DROP  
 # Drop SMTP mail traffic on TCP port 25 to prevent spam or unauthorized mail relaying  
 
- iptables -A INPUT -s 203.0.113.45 -j DROP  
+iptables -A INPUT -s 203.0.113.45 -j DROP  
 # Block all incoming traffic from a specific IP address (example: 203.0.113.45)  
 
- iptables -A INPUT -p tcp --dport 3306 -s 192.168.1.100 -j ACCEPT  
+iptables -A INPUT -p tcp --dport 3306 -s 192.168.1.100 -j ACCEPT  
 # Allow MySQL database access on port 3306 only from a trusted IP address (192.168.1.100) 
 
- iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 22 -j ACCEPT  
+iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 22 -j ACCEPT  
 # Allow incoming SSH (port 22) from any IP in the 192.168.1.0/24 subnet (e.g. your internal LAN)
 
- iptables -A INPUT -p tcp --dport 10000:20000 -j ACCEPT  
+iptables -A INPUT -p tcp --dport 10000:20000 -j ACCEPT  
 # Allow incoming TCP connections on ports 10000 to 20000 (e.g. passive FTP, VoIP, or custom services)
 
- iptables -A INPUT -p tcp --dport 22 -j LOG --log-prefix "SSH Attempt: "  
+iptables -A INPUT -p tcp --dport 22 -j LOG --log-prefix "SSH Attempt: "  
 # Log every incoming SSH connection attempt (port 22) with the prefix "SSH Attempt:" in syslog
 
- iptables -A INPUT -p tcp -s 192.168.2.50 --dport 80 -j ACCEPT  
+iptables -A INPUT -p tcp -s 192.168.2.50 --dport 80 -j ACCEPT  
 # Allow HTTP (port 80) connections from a specific IP address: 192.168.2.50
 
- iptables -P INPUT DROP  
+iptables -P INPUT DROP  
 # Set default policy for INPUT chain to DROP, blocking all unspecified incoming connections  
 
- iptables -P FORWARD DROP  
+iptables -P FORWARD DROP  
 # Set default policy for FORWARD chain to DROP, blocking all packet forwarding by default  
 
- iptables -P OUTPUT ACCEPT  
+iptables -P OUTPUT ACCEPT  
 # Set default policy for OUTPUT chain to ACCEPT, allowing all outgoing connections  
 
- iptables -L -v -n  
+iptables -L -v -n  
 # List all current iptables rules with packet and byte counters; numeric output (no DNS lookup)  
 
- iptables -F  
+iptables -F  
 # Flush (delete) all existing iptables rules, clearing the firewall ruleset   
 
 
 # Saving and restoring rules (without iptables-persistent)
- iptables-save > ~/iptables.rules           # Save current rules to file  
- iptables-restore < ~/iptables.rules        # Restore rules from file  
+iptables-save > ~/iptables.rules           # Save current rules to file  
+iptables-restore < ~/iptables.rules        # Restore rules from file  
 
 # Saving and restoring with iptables-persistent
- apt install iptables-persistent            # Install persistent rule saving (asks to save current rules)  
- netfilter-persistent save                  # Save current IPv4 and IPv6 rules to /etc/iptables/rules.v4/.v6  
- netfilter-persistent reload                # Reload saved rules (without reboot)  
- netfilter-persistent flush                 # Flush all rules managed by iptables-persistent  
- iptables-save > /etc/iptables/rules.v4     # Save IPv4 rules to persistent storage (manual) 
- iptables-restore < /etc/iptables/rules.v4  # To manually reload saved rules without rebooting
+apt install iptables-persistent            # Install persistent rule saving (asks to save current rules)  
+netfilter-persistent save                  # Save current IPv4 and IPv6 rules to /etc/iptables/rules.v4/.v6  
+netfilter-persistent reload                # Reload saved rules (without reboot)  
+netfilter-persistent flush                 # Flush all rules managed by iptables-persistent  
+iptables-save > /etc/iptables/rules.v4     # Save IPv4 rules to persistent storage (manual) 
+iptables-restore < /etc/iptables/rules.v4  # To manually reload saved rules without rebooting
 
- nft list ruleset
+nft list ruleset
 # Create table and chains with policies
- nft add table inet filter
- nft add chain inet filter input { type filter hook input priority 0 \; policy drop \; }
- nft add chain inet filter forward { type filter hook forward priority 0 \; policy drop \; }
- nft add chain inet filter output { type filter hook output priority 0 \; policy accept \; }
+nft add table inet filter
+nft add chain inet filter input { type filter hook input priority 0 \; policy drop \; }
+nft add chain inet filter forward { type filter hook forward priority 0 \; policy drop \; }
+nft add chain inet filter output { type filter hook output priority 0 \; policy accept \; }
 
 # Create a user-defined chain for logging
- nft add chain inet filter logging { }
+nft add chain inet filter logging { }
 
 # Allow all traffic on loopback interface
- nft add rule inet filter input iif "lo" accept
+nft add rule inet filter input iif "lo" accept
 
 # Allow established and related connections
- nft add rule inet filter input ct state established,related accept
+nft add rule inet filter input ct state established,related accept
 
 # Allow ICMP (ping)
- nft add rule inet filter input ip protocol icmp accept
+nft add rule inet filter input ip protocol icmp accept
 
 # Allow SSH (TCP port 22)
- nft add rule inet filter input tcp dport 22 accept
+nft add rule inet filter input tcp dport 22 accept
 
 # Allow HTTP (TCP port 80)
- nft add rule inet filter input tcp dport 80 accept
+nft add rule inet filter input tcp dport 80 accept
 
 # Allow HTTPS (TCP port 443)
- nft add rule inet filter input tcp dport 443 accept
+nft add rule inet filter input tcp dport 443 accept
 
 # Allow DNS (UDP port 53)
- nft add rule inet filter input udp dport 53 accept
+nft add rule inet filter input udp dport 53 accept
 
 # Allow NTP (UDP port 123)
- nft add rule inet filter input udp dport 123 accept
+nft add rule inet filter input udp dport 123 accept
 
 # Drop SMTP (TCP port 25)
- nft add rule inet filter input tcp dport 25 drop
+nft add rule inet filter input tcp dport 25 drop
 
 # Block specific IP (203.0.113.45)
- nft add rule inet filter input ip saddr 203.0.113.45 drop
+nft add rule inet filter input ip saddr 203.0.113.45 drop
 
 # Allow MySQL from trusted IP (TCP port 3306 from 192.168.1.100)
- nft add rule inet filter input ip saddr 192.168.1.100 tcp dport 3306 accept
+nft add rule inet filter input ip saddr 192.168.1.100 tcp dport 3306 accept
 
 # Allow SSH from subnet 192.168.1.0/24
- nft add rule inet filter input ip saddr 192.168.1.0/24 tcp dport 22 accept
+nft add rule inet filter input ip saddr 192.168.1.0/24 tcp dport 22 accept
 
 # Allow TCP ports 10000 to 20000
- nft add rule inet filter input tcp dport 10000-20000 accept
+nft add rule inet filter input tcp dport 10000-20000 accept
 
 # Allow HTTP from specific IP (192.168.2.50)
- nft add rule inet filter input ip saddr 192.168.2.50 tcp dport 80 accept
+nft add rule inet filter input ip saddr 192.168.2.50 tcp dport 80 accept
 
 # Logging dropped packets with limit 2 per minute
- nft add rule inet filter logging limit rate 2/minute log prefix "NFTables-Dropped: " level info
+nft add rule inet filter logging limit rate 2/minute log prefix "NFTables-Dropped: " level info
 
 # Jump to logging chain for packets reaching INPUT chain
- nft add rule inet filter input counter jump logging
+nft add rule inet filter input counter jump logging
 
 # Log every incoming SSH attempt (port 22)
- nft add rule inet filter input tcp dport 22 log prefix "SSH Attempt: " level info
+nft add rule inet filter input tcp dport 22 log prefix "SSH Attempt: " level info
 
 # 4. Flush all rules (equivalent to iptables -F)
- nft flush chain inet filter input
- nft flush chain inet filter forward
- nft flush chain inet filter output
- nft flush chain inet filter logging
+nft flush chain inet filter input
+nft flush chain inet filter forward
+nft flush chain inet filter output
+nft flush chain inet filter logging
 
 # Or delete the whole table to remove all rules/chains
- nft delete table inet filter
+nft delete table inet filter
 
 # Save current ruleset to file
- nft list ruleset > ~/nftables.rules
+nft list ruleset > ~/nftables.rules
 
 # Restore from saved file
- nft -f ~/nftables.rules
+nft -f ~/nftables.rules
 ```
 
 
