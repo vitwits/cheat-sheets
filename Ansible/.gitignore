@@ -1,0 +1,45 @@
+# Ansible specific files and directories
+.ansible/
+*.retry
+*.vault
+.vault-password-file
+ansible.log
+ansible-debug.log
+inventory_*.ini.bak
+inventory_*.yml.bak
+inventory.ini
+
+# Python virtual environment (if used with Ansible)
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Editor/IDE specific files
+.idea/
+.vscode/
+*.swp
+*~
+
+# Temporary files
+*.tmp
+*.bak
+*.old
+*.orig
+
+# Sensitive data (if not using Ansible Vault for them)
+# Consider using Ansible Vault for sensitive data (passwords, API keys etc.)
+# If you store sensitive data in plaintext and do not use Vault,
+# you should explicitly list them here. For example:
+# group_vars/all/secrets.yml
+# host_vars/*/secrets.yml
+
+# Any auto-generated documentation or temporary output
+# For example, if you generate dynamic inventories or documentation
+# output/
+# docs/_build/
+
+# Specific to your project setup if you have custom scripts
+# For example:
+# my_custom_script_output.txt

@@ -1,0 +1,19 @@
+---
+- name: Install net-tools and save ifconfig output
+  hosts: all
+  become: true
+  tasks:
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install net-tools
+      apt:
+        name: net-tools
+        state: present
+
+    - name: Run ifconfig and save output to ~/ifconfig.info
+      shell: ifconfig > /home/{{ ansible_user }}/ifconfig.info
+      args:
+        executable: /bin/bash

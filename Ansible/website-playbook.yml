@@ -1,0 +1,59 @@
+---
+- name: Install net-tools and save ifconfig output
+  hosts: all
+  become: true
+  tasks:
+   
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      
+    - name: Install needed packets
+      apt:
+        name: 
+          - apache2
+          - unzip
+          - curl
+          - wget
+        state: present
+
+    - name: Download website template archive
+      ansible.builtin.get_url:
+        url: https://files.all-free-download.com/downloadfiles/graphic/graphic_7/unite_template_6890779.zip
+        dest: /tmp/website.zip
+
+    - name: Create destination directory for website
+      ansible.builtin.file:
+        path: /tmp/website
+        state: directory
+        mode: '0755'
+      
+    - name: Unzip website template
+      ansible.builtin.unarchive:
+        src: /tmp/website.zip
+        dest: /tmp/website
+        remote_src: yes
+
+    - name: Delete existing website data
+      shell: rm -rf /var/www/html/*
+
+    - name: Copy files to /var/www/html
+      ansible.builtin.copy:
+        src: /tmp/website/
+        dest: /var/www/html/
+        owner: www-data
+        group: www-data
+        mode: '0644'
+        remote_src: yes
+
+    - name: Set correct permissions for /var/www/html
+      ansible.builtin.file:
+        path: /var/www/html
+        state: directory
+        recurse: yes
+        owner: www-data
+        group: www-data
+        mode: '0755' 
+        
+    - name: Clean-up unused data
+      shell: rm -rf /tmp/*
