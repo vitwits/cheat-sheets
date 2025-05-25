@@ -1,5 +1,5 @@
 ---
-- name: Install net-tools and save ifconfig output
+- name: Install Apache web-server with a simple website template
   hosts: all
   become: true
   tasks:
