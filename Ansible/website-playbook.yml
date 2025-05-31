@@ -41,9 +41,6 @@
       ansible.builtin.copy:
         src: /tmp/website/
         dest: /var/www/html/
-        owner: www-data
-        group: www-data
-        mode: '0644'
         remote_src: yes
 
     - name: Set correct permissions for /var/www/html
