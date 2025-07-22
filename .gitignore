@@ -99,3 +99,34 @@ logs/
 *.seed
 *.sublime-workspace
 *.sublime-project
+
+# Local .terraform directories
+.terraform/
+.terraform.lock.hcl
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Terraform variable files that may contain sensitive data
+*.tfvars
+*.tfvars.json
+
+# Override files (useful for dev/testing only)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# CLI configuration files
+.terraformrc
+terraform.rc
+
+# Provider plugin binaries (if manually placed)
+terraform-provider-*
+
+# Backup files
+*.backup
