@@ -6,10 +6,74 @@
 ### 1.3 Kernel and OS
 
 ## 2. File Management
+
 ### 2.1 File Operations
-### 2.2 Directory Operations
-### 2.3 File Permissions and Ownership
-### 2.4 Disk Usage and Filesystems
+
+# 2.1.1 Clearing File Content
+```bash
+> filename                 # Truncate file to zero size
+truncate -s 0 filename     # Explicitly set file size to 0
+cat /dev/null > filename   # Overwrite file with empty content
+```
+
+# 2.1.2 Basic File Operations
+```bash
+cp source.txt dest.txt      # Copy file
+mv oldname.txt newname.txt  # Move or rename file
+rm file.txt                 # Remove file
+touch newfile.txt           # Create empty file or update timestamp
+```
+
+# 2.1.3 Viewing File Content
+```bash
+cat file.txt                # Print entire file
+less file.txt               # View file with paging
+head file.txt               # View first 10 lines
+tail file.txt               # View last 10 lines
+tail -f logfile.log         # Follow a log file in real time
+```
+
+
+# 2.1.4 Searching and Finding
+```bash
+grep "pattern" file.txt          # Search for pattern in file
+grep -r "pattern" /path/to/dir  # Recursively search in directory
+find /path -name "file.txt"      # Find file by name
+locate file.txt                  # Quickly find file using database
+```
+
+# 2.2 Directory Operations
+```bash
+ls -l /path/to/dir           # List files with details
+ls -a /path/to/dir           # List all files including hidden
+mkdir newdir                 # Create new directory
+rmdir emptydir               # Remove empty directory
+rm -r dir_to_delete          # Remove directory with content
+cd /path/to/dir              # Change directory
+pwd                          # Print current directory
+tree /path/to/dir            # Display directory tree
+```
+
+# 2.3 File Permissions and Ownership
+```bash
+chmod 644 file.txt            # Set rw-r--r-- permissions
+chmod +x script.sh            # Add execute permission
+chown user:group file.txt     # Change owner and group
+ls -l file.txt                # Show permissions, owner, group
+stat file.txt                 # Detailed file info including permissions
+umask                         # Show default permission mask
+```
+
+# 2.4 Disk Usage and Filesystems
+```bash
+df -h                        # Show disk usage of filesystems
+du -sh /path/to/dir           # Show size of a directory
+lsblk                        # List block devices
+mount /dev/sdb1 /mnt          # Mount device
+umount /mnt                   # Unmount device
+blkid                         # Show UUIDs and filesystem types
+fdisk -l                      # List partitions
+```
 
 ## 3. Process Management
 ### 3.1 Viewing Processes
