@@ -1,0 +1,158 @@
+# Azure CLI (az) Mega Cheatsheet
+
+> **Tip:** Use `az <command> --help` for full options.  
+> Replace `<placeholders>` with your values.
+
+---
+
+## 1. Authentication & Account
+| Command | Description |
+|---------|-------------|
+| `az login` | Log in interactively or with device code |
+| `az login --service-principal -u <app-id> -p <password> --tenant <tenant>` | SPN login |
+| `az logout` | Log out current user |
+| `az account list` | List all subscriptions |
+| `az account set --subscription <id-or-name>` | Set active subscription |
+| `az account show` | Show current subscription |
+| `az account clear` | Clear cached credentials |
+| `az account list-locations --output table` | List all available regions |
+
+---
+
+## 2. Resource Groups
+| Command | Description |
+|---------|-------------|
+| `az group create -n <name> -l <location>` | Create resource group |
+| `az group list --output table` | List all resource groups |
+| `az group show -n <name>` | Show group details |
+| `az group delete -n <name> --yes` | Delete group (no prompt) |
+| `az group exists -n <name>` | Check if group exists (true/false) |
+| `az group export -n <name> > template.json` | Export ARM template |
+
+---
+
+## 3. Virtual Machines (VM)
+| Command | Description |
+|---------|-------------|
+| `az vm create -g <rg> -n <vm> --image Ubuntu2204 --size Standard_B1s --admin-username azureuser --generate-ssh-keys` | Create Linux VM + SSH key |
+| `az vm list --output table` | List all VMs in subscription |
+| `az vm list-sizes -l <location>` | List available VM sizes in region |
+| `az vm list-skus --location <region> --resource-type virtualMachines --all --output table` | List VM SKUs + zones (availability) |
+| `az vm show -g <rg> -n <vm>` | Show VM details |
+| `az vm start/stop/restart/deallocate -g <rg> -n <vm>` | Control VM power state |
+| `az vm delete -g <rg> -n <vm> --yes` | Delete VM |
+| `az vm open-port -g <rg> -n <vm> --port 22` | Open port via NSG |
+| `az vm run-command invoke -g <rg> -n <vm> --command-id RunShellScript --scripts "whoami"` | Run script on VM |
+| `az vm disk attach --vm-name <vm> --resource-group <rg> --name <disk>` | Attach disk to VM |
+| `az vm disk detach --vm-name <vm> --resource-group <rg> --name <disk>` | Detach disk from VM |
+
+---
+
+## 4. Disks & Snapshots
+| Command | Description |
+|---------|-------------|
+| `az disk create --resource-group <rg> --name <disk> --size-gb 30` | Create managed disk |
+| `az disk list --resource-group <rg>` | List disks |
+| `az disk delete --resource-group <rg> --name <disk> --yes` | Delete disk |
+| `az snapshot create --resource-group <rg> --name <snapshot> --source <disk>` | Create snapshot from disk |
+| `az snapshot list --resource-group <rg>` | List snapshots |
+| `az snapshot delete --resource-group <rg> --name <snapshot>` | Delete snapshot |
+
+---
+
+## 5. Storage (Accounts, Containers, Blobs)
+| Command | Description |
+|---------|-------------|
+| `az storage account create -n <name> -g <rg> -l <location> --sku Standard_LRS` | Create storage account |
+| `az storage account list` | List storage accounts |
+| `az storage account keys list -n <name> -g <rg>` | Show account keys |
+| `az storage container create --account-name <name> --name <container> --auth-mode login` | Create container |
+| `az storage blob upload --account-name <name> -c <container> -f <file> -n <blob>` | Upload file to container |
+| `az storage blob list --account-name <name> -c <container>` | List blobs in container |
+| `az storage blob download --account-name <name> -c <container> -n <blob> -f <file>` | Download blob |
+| `az storage blob delete --account-name <name> -c <container> -n <blob>` | Delete blob |
+| `az copy "https://<account>.blob.core.windows.net/<container>/*" "./backup" --recursive` | Fast copy blobs |
+
+---
+
+## 6. Networking (VNet, Subnet, NSG, Public IP, NIC)
+| Command | Description |
+|---------|-------------|
+| `az network vnet create -g <rg> -n <vnet> --address-prefix 10.0.0.0/16 --subnet-name default --subnet-prefix 10.0.0.0/24` | Create VNet + default subnet |
+| `az network vnet list --output table` | List VNets |
+| `az network vnet subnet create -g <rg> --vnet-name <vnet> -n <subnet> --address-prefixes 10.0.1.0/24` | Add subnet |
+| `az network nsg create -g <rg> -n <nsg>` | Create NSG |
+| `az network nsg rule create -g <rg> --nsg-name <nsg> -n AllowSSH --priority 100 --direction Inbound --access Allow --protocol Tcp --destination-port-range 22` | Allow SSH |
+| `az network public-ip create -g <rg> -n <ip> --sku Standard --allocation-method Static` | Create public IP |
+| `az network nic create -g <rg> --vnet-name <vnet> --subnet <subnet> -n <nic> --public-ip-address <ip>` | Create NIC with public IP |
+
+---
+
+## 7. Azure Kubernetes Service (AKS)
+| Command | Description |
+|---------|-------------|
+| `az aks create -g <rg> -n <cluster> --node-count 2 --enable-managed-identity --generate-ssh-keys` | Create AKS cluster |
+| `az aks list` | List clusters |
+| `az aks get-credentials -g <rg> -n <cluster> --overwrite-existing` | Merge kubeconfig |
+| `az aks nodepool add -g <rg> --cluster-name <cluster> -n spotpool --node-count 3 --labels spot=true` | Add spot node pool |
+| `az aks scale -g <rg> -n <cluster> --node-count 5` | Scale default node pool |
+| `az aks upgrade -g <rg> -n <cluster> --kubernetes-version 1.29.7` | Upgrade control plane |
+| `az aks delete -g <rg> -n <cluster> --yes` | Delete cluster |
+
+---
+
+## 8. App Service (Web Apps)
+| Command | Description |
+|---------|-------------|
+| `az appservice plan create -g <rg> -n <plan> --sku B1 --is-linux` | Create Linux App Service Plan |
+| `az webapp create -g <rg> --plan <plan> -n <app> --runtime "PYTHON|3.11"` | Create Python web app |
+| `az webapp list` | List web apps |
+| `az webapp up -g <rg> -n <app> --runtime "NODE|18"` | Deploy from local folder |
+| `az webapp deployment source config-zip -g <rg> -n <app> --src app.zip` | Deploy ZIP |
+| `az webapp config appsettings set -g <rg> -n <app> --settings DB_HOST=mydb.postgres.database.azure.com` | Set app settings |
+| `az webapp log tail -g <rg> -n <app>` | Stream logs |
+| `az webapp ssh -g <rg> -n <app>` | SSH into app container |
+
+---
+
+## 9. Databases (SQL, Cosmos DB, PostgreSQL)
+| Command | Description |
+|---------|-------------|
+| `az sql server create -g <rg> -n <server> -l <location> --admin-user <user> --admin-password <pass>` | Create SQL Server |
+| `az sql db create -g <rg> --server <server> -n <db> --service-objective S0` | Create SQL DB |
+| `az sql db list -g <rg> --server <server>` | List databases |
+| `az cosmosdb create -g <rg> -n <account> --kind GlobalDocumentDB` | Create Cosmos DB |
+| `az postgres flexible-server create -g <rg> -n <server> --public-access all` | Create Flexible PostgreSQL |
+
+---
+
+## 10. Monitoring & Logs
+| Command | Description |
+|---------|-------------|
+| `az monitor log-analytics workspace create -g <rg> -n <ws> -l <location>` | Create Log Analytics workspace |
+| `az monitor diagnostic-settings create --resource <id> -n <name> --workspace <ws-id> --logs '[{"category":"Audit","enabled":true}]'` | Send logs to workspace |
+| `az monitor metrics list --resource <id> --metric CPU` | Get metric values |
+| `az monitor activity-log list -g <rg>` | Show activity log |
+| `az graph query -q "Resources | where type =~ 'microsoft.compute/virtualmachines' | limit 10"` | Azure Resource Graph |
+
+---
+
+## 11. CLI Utilities & Extensions
+| Command | Description |
+|---------|-------------|
+| `az --version` | Show CLI version |
+| `az configure --defaults location=westeurope group=MyRG` | Set defaults |
+| `az find "vm create"` | Interactive command search |
+| `az extension list` | List installed extensions |
+| `az extension add --name <extension>` | Install extension |
+| `az interactive` | Launch interactive mode |
+| `az rest --method get --url https://management.azure.com/subscriptions/<id>?api-version=2021-04-01` | Call REST API |
+
+---
+
+## 12. Regions & Availability Zones
+| Command | Description |
+|---------|-------------|
+| `az account list-locations --output table` | List all Azure regions |
+| `az vm list-skus --location <region> --size <sku> --all --query "[].locationInfo[].zones" -o json` | Check available zones for a SKU |
+| **
