@@ -8,6 +8,24 @@ Bash scripting is a powerful tool for automating tasks and managing systems on L
 
 -----
 
+# FORGET FOREVER (DevOps 2025)
+
+```diff
+- sudo adduser
+- sudo addgroup
+- sudo adduser --system
+- sudo addgroup --system
+```
+
+**ONLY EVER USE**
+```
+useradd    → users
+groupadd   → groups
+usermod -aG → add to groups
+```
+
+-----
+
 ## Table of Contents
 
 1.  [**Basic Structure & Shebang**](https://www.google.com/search?q=%231-basic-structure--shebang)
