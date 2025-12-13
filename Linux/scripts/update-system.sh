@@ -13,13 +13,11 @@ EMAIL="example@mail.com" # Replace with your actual email
 
 # --- Helper Functions ---
 log_message() {
-    local message="$1"
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $message" | tee -a "$LOG_FILE"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $*" | tee -a "$LOG_FILE"
 }
 
 log_error() {
-    local message="$1"
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - ERROR: $message" | tee -a "$LOG_FILE" >&2
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - ERROR: $*" | tee -a "$LOG_FILE" >&2
 }
 
 # --- Root privileges check ---
